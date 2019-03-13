@@ -1,7 +1,9 @@
 const router = require("express").Router();
-const exampleRoutes = require("./example");
+const studentRoutes = require("./student");
+const eventRoutes = require("./event");
 
-// Example routes
-router.use("/example", exampleRoutes);
+
+router.use("/students", studentRoutes);
+router.use("/events", eventRoutes);
 
 module.exports = router;
