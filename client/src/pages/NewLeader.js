@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from "../utils/API";
 
+
 class NewLeader extends Component {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ class NewLeader extends Component {
     event.preventDefault();
     debugger;
     const name = this.state.name.trim();
-    const org = this.state.university.trim();
+    const org = this.state.org.trim();
     const project = this.state.project.trim();
     const area = this.state.area.trim();
 
@@ -56,6 +57,7 @@ class NewLeader extends Component {
   } */
 
   render() {
+
     const name = this.state.name;
     const org = this.state.org;
     const project = this.state.project;

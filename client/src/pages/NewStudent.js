@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from "../utils/API";
 
+
 class NewStudent extends Component {
   constructor(props) {
     super(props);
@@ -8,10 +9,8 @@ class NewStudent extends Component {
     this.state = {
       name: "",
       university: "",
-      org: "",
       project: "",
-      area: "",
-      leader: "",
+      id: "",
     };
   }
 
@@ -29,19 +28,15 @@ class NewStudent extends Component {
     debugger;
     const name = this.state.name.trim();
     const university = this.state.university.trim();
-    const org = this.state.org.trim();
     const project = this.state.project.trim();
-    const area = this.state.area.trim();
-    const leader = this.state.leader.trim();
+    const id = this.state.id.trim();
 
     
       API.saveExample({
         name,
         university,
-        org,
         project,
-        area,
-        leader
+        id
       }).then(() => {
 
         this.props.history.push('/');
@@ -63,12 +58,11 @@ class NewStudent extends Component {
   } */
 
   render() {
+
     const name = this.state.name;
     const university = this.state.university;
-    const org = this.state.org;
     const project = this.state.project;
-    const area = this.state.area;
-    const leader = this.state.leader;    
+    const id = this.state.id;    
     return (
       <form className="container" onSubmit={this.submitExample}>
         <h1>Add a New Social Service Student</h1>
@@ -97,19 +91,7 @@ class NewStudent extends Component {
             onChange={this.handleInputChange}
             value={university} />
         </div>
-        <div className="form-group">
-          <label
-            htmlFor="org">
-            Assigned Organization:
-          </label>
-          <input
-            className="form-control" 
-            name="org" 
-            type="text"
-            placeholder="org"
-            onChange={this.handleInputChange} 
-            value={org} />
-        </div>
+
         <div className="form-group">
           <label
             htmlFor="project">
@@ -123,31 +105,19 @@ class NewStudent extends Component {
             onChange={this.handleInputChange} 
             value={project} />
         </div>
+
         <div className="form-group">
           <label
-            htmlFor="area">
-            Assigned Area:
+            htmlFor="id">
+            Assigned ID:
           </label>
           <input
             className="form-control" 
-            name="area" 
+            name="id" 
             type="text"
-            placeholder="area"
+            placeholder="id"
             onChange={this.handleInputChange} 
-            value={area} />
-        </div>
-        <div className="form-group">
-          <label
-            htmlFor="leader">
-            Assigned Leader:
-          </label>
-          <input
-            className="form-control" 
-            name="leader" 
-            type="text"
-            placeholder="leader"
-            onChange={this.handleInputChange} 
-            value={leader} />
+            value={id} />
         </div>
 
         <button 

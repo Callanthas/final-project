@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import API from "../utils/API";
 
+
 class NewProject extends Component {
   constructor(props) {
     super(props);
@@ -59,6 +60,7 @@ class NewProject extends Component {
   } */
 
   render() {
+
     const name = this.state.name;
     const org = this.state.org;
     const area = this.state.area;

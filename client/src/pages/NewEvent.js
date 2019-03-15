@@ -54,11 +54,13 @@ class NewEvent extends Component {
   } */
 
   render() {
+
     const name = this.state.name;
     const date = this.state.date;
     const hours = this.state.hours;
  
     return (
+      
       <form className="container" onSubmit={this.submitExample}>
         <h1>Add a New Event</h1>
         <div className="form-group">
@@ -109,5 +111,6 @@ class NewEvent extends Component {
     );
   }
 }
+
 
 export default NewEvent;
