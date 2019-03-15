@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const controller = require("../../controllers/studentController");
+const controller = require("../../controllers/appController");
 const collection = 'Student';
 
 
@@ -10,11 +10,17 @@ router.route("/")
   .post((req, res) => {
     controller.create(req, res, collection);
   });
-/*
+
 router
   .route("/:id")
-  .get(studentController.findById)
-  .put(studentController.update)
-  .delete(studentController.remove);
-*/
+  .get((req, res) => {
+    controller.findById(req, res, collection);
+  })
+  .put((req, res) => {
+    controller.update(req, res, collection);
+  })
+  .delete((req, res) => {
+    controller.remove(req, res, collection);
+  });
+
 module.exports = router;
