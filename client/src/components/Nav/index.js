@@ -17,88 +17,76 @@ class Nav extends Component {
   }
 
   render() {
-    return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-        <h1 className="navbar-brand">React Express Example</h1>
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li className="nav-item active">
-            <Link className="nav-link" to="/">
-              Home
-            </Link>
-          </li>
-          <li className="nav-item active">
-            <Link className="nav-link" to="/newexample">
-              Main
-            </Link>
-  
-          </li>
-          <li className="nav-item active ">
-            <button className="nav-link" >
-            <Dropdown>
-          <Dropdown.Toggle as={Dropdown} id="dropdown-custom-components">
-            Event
-            <a href="" onClick={this.handleClick}>
-            {this.props.children}
-          </a>
-          </Dropdown.Toggle>
+   
+      return (
+        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+          <h1 className="navbar-brand">
+            <Link className="nav-link" to="/admin">
+              Admin          </Link>
+    
+          </h1>
+          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+    
+    
+            <li className="nav-item active">
+              <Link className="nav-link" to="/newstudent">
+                Add Student
+              </Link>
+            </li>
+    
+            <li className="nav-item active">
+              <Link className="nav-link" to="/newevent">
+                Add Event
+              </Link>
+            </li>
+    
+            <li className="nav-item active">
+              <Link className="nav-link" to="/newproject">
+                Add Project
+              </Link>
+            </li>
+    
+            <li className="nav-item active">
+              <Link className="nav-link" to="/newleader">
+                Add Leader
+              </Link>
+            </li>
+            <li className="nav-item active">
+              <Link className="nav-link" to="/">
+                Student inf.
+              </Link>
+            </li>
+            <li className="nav-item active ">
+                <button className="nav-link" >
+                <Dropdown>
+              <Dropdown.Toggle as={Dropdown} id="dropdown-custom-components">
+                Event
+                <a href="" onClick={this.handleClick}>
+                {this.props.children}
+              </a>
+              </Dropdown.Toggle>
+          
+              <Dropdown.Menu as={CustomMenu}>
+                <Dropdown.Item eventKey="1">Red</Dropdown.Item>
+                <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
+                <Dropdown.Item eventKey="3" active>
+                  Orange
+                </Dropdown.Item>
+                <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
+                </button>
       
-          <Dropdown.Menu as={CustomMenu}>
-            <Dropdown.Item eventKey="1">Red</Dropdown.Item>
-            <Dropdown.Item eventKey="2">Blue</Dropdown.Item>
-            <Dropdown.Item eventKey="3" active>
-              Orange
-            </Dropdown.Item>
-            <Dropdown.Item eventKey="1">Red-Orange</Dropdown.Item>
-          </Dropdown.Menu>
-        </Dropdown>
-            </button>
-  
-          </li>
-        </ul>
-      </nav>
-    );
-  }
-
-function Nav() {
-  return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-      <h1 className="navbar-brand">
-        <Link className="nav-link" to="/admin">
-          Admin          </Link>
-
-      </h1>
-      <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+              </li>
+    
+          </ul>
+        </nav>
+      );
+    
+    }
+  };
 
 
-        <li className="nav-item active">
-          <Link className="nav-link" to="/newstudent">
-            Add Student
-          </Link>
-        </li>
-
-        <li className="nav-item active">
-          <Link className="nav-link" to="/newevent">
-            Add Event
-          </Link>
-        </li>
-
-        <li className="nav-item active">
-          <Link className="nav-link" to="/newproject">
-            Add Project
-          </Link>
-        </li>
-
-        <li className="nav-item active">
-          <Link className="nav-link" to="/newleader">
-            Add Leader
-          </Link>
-        </li>
-
-      </ul>
-    </nav>
-  );
-
-}
 class CustomMenu extends Component {
   constructor(props, context) {
     super(props, context);
