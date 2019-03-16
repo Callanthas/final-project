@@ -1,9 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import "./assets/main.css";
+
 import Home from "./pages/Home";
 import Example from "./pages/Example";
 import ExampleForm from "./pages/ExampleForm";
+//import Events from "./pages/Events";
 import NoMatch from "./pages/NoMatch";
 import Nav from "./components/Nav";
 
@@ -16,6 +19,7 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/example/:id" component={Example} />
           <Route exact path="/newexample" component={ExampleForm} />
+         
           <Route component={NoMatch} />
         </Switch>
       </>
