@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require("express");
 const mongoose = require("mongoose");
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 3000;
 const app = express();
 
 const routes = require("./routes");
@@ -16,8 +16,7 @@ if (process.env.NODE_ENV === "production") {
 
 app.use(routes);
 
-// Connect to the Mongo DB
-mongoose.connect(process.env.MONGODB_URI);
+mongoose.connect('mongodb://localhost/finalclassproject', { useNewUrlParser: true });
 
 app.listen(PORT, () => {
   console.log(`🌎 ==> API server now on port ${PORT}!`);
