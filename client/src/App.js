@@ -1,7 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import "./assets/main.css";
+
 import Home from "./pages/Home";
+
+//import Events from "./pages/Events";
+
 import NoMatch from "./pages/NoMatch";
 import NewStudent from"./pages/NewStudent";
 import NewEvent from"./pages/NewEvent";
@@ -21,6 +26,7 @@ function App() {
         <Nav />
         <Switch>
           <Route exact path="/" component={Home} />
+
           <Route exact path="/NewStudent/" component={NewStudent} />
           <Route exact path="/NewEvent/" component={NewEvent} />
           <Route exact path="/NewLeader/" component={NewLeader} />
