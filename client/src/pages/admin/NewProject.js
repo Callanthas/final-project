@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from "../utils/API";
+import API from "../../utils/API";
 
 
 class NewProject extends Component {
@@ -33,7 +33,7 @@ class NewProject extends Component {
     const leader = this.state.leader.trim();
     const students = this.state.students.trim();
 
-      API.saveExample({
+      API.saveNewProject({
         name,
         org,
         area,

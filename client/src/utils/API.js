@@ -16,5 +16,25 @@ export default {
   // Saves an example to the database
   saveExample: function(exampleData) {
     return axios.post("/api/example", exampleData);
-  }
+  },
+
+
+  // ADMIN VIEW SAVES NEW STUDENT, PROJECT, EVENT AND SUPERVISOR(LEADER)
+  saveNewStudent: function(studentData) {
+    return axios.post("/students", studentData);
+  },
+
+  saveNewProject: function(projectData) {
+    return axios.post("/projects", projectData);
+  },
+
+  saveNewEvent: function(eventData) {
+    return axios.post("/events", eventData);
+  },
+
+  saveNewSupervisor: function(supervisorData) {
+    return axios.post("/supervisors", supervisorData);
+  },
+
+
 };

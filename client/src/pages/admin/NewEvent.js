@@ -1,16 +1,15 @@
 import React, { Component } from 'react';
-import API from "../utils/API";
+import API from "../../utils/API";
+import axios from "axios";
 
-
-class NewLeader extends Component {
+class NewEvent extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: "",
-      org: "",
-      project: "",
-      area: "",
+      date: "",
+      hours: "",
     };
   }
 
@@ -27,15 +26,14 @@ class NewLeader extends Component {
     event.preventDefault();
     debugger;
     const name = this.state.name.trim();
-    const org = this.state.org.trim();
-    const project = this.state.project.trim();
-    const area = this.state.area.trim();
+    const date = this.state.date.trim();
+    const hours = this.state.hours.trim();
 
-      API.saveExample({
+    
+      API.saveNewEvent({
         name,
-        org,
-        project,
-        area,
+        date,
+        hours
       }).then(() => {
 
         this.props.history.push('/');
@@ -59,12 +57,13 @@ class NewLeader extends Component {
   render() {
 
     const name = this.state.name;
-    const org = this.state.org;
-    const project = this.state.project;
-    const area = this.state.area;
+    const date = this.state.date;
+    const hours = this.state.hours;
+ 
     return (
+      
       <form className="container" onSubmit={this.submitExample}>
-        <h1>Add a New Leader</h1>
+        <h1>Add a New Event</h1>
         <div className="form-group">
           <label
             htmlFor="name">
@@ -78,48 +77,33 @@ class NewLeader extends Component {
             onChange={this.handleInputChange} 
             value={name} />
         </div>
-
         <div className="form-group">
-          <label
-            htmlFor="org">
-            Assigned Organization:
+          <label 
+            htmlFor="description">
+            Date:
           </label>
-          <input
-            className="form-control" 
-            name="org" 
-            type="text"
-            placeholder="org"
-            onChange={this.handleInputChange} 
-            value={org} />
+          <textarea 
+            className="form-control"
+            name="date" 
+            placeholder="date"
+            onChange={this.handleInputChange}
+            value={date} />
         </div>
         <div className="form-group">
           <label
-            htmlFor="project">
-            Assigned Project:
+            htmlFor="hours">
+            Hours Validated :
           </label>
           <input
             className="form-control" 
-            name="project" 
+            name="hours" 
             type="text"
-            placeholder="project"
+            placeholder="hours"
             onChange={this.handleInputChange} 
-            value={project} />
+            value={hours} />
         </div>
-        <div className="form-group">
-          <label
-            htmlFor="area">
-            Assigned Area:
-          </label>
-          <input
-            className="form-control" 
-            name="area" 
-            type="text"
-            placeholder="area"
-            onChange={this.handleInputChange} 
-            value={area} />
-        </div>
-
-        <button 
+  
+      <button 
           className="btn btn-primary"
           type="submit">
           Submit
@@ -129,4 +113,5 @@ class NewLeader extends Component {
   }
 }
 
-export default NewLeader;
+
+export default NewEvent;
