@@ -7,7 +7,7 @@ export default {
   },
   // Gets the example with the given id
   getExample: function(id) {
-    return axios.get(`/api/example/${id}` );
+    return axios.get(`/api/example/${id}`);
   },
   // Deletes the example with the given id
   deleteExample: function(id) {
@@ -18,23 +18,20 @@ export default {
     return axios.post("/api/example", exampleData);
   },
 
-
   // ADMIN VIEW SAVES NEW STUDENT, PROJECT, EVENT AND SUPERVISOR(LEADER)
   saveNewStudent: function(studentData) {
-    return axios.post("/students", studentData);
+    return axios.post("/api/students", studentData);
   },
 
   saveNewProject: function(projectData) {
-    return axios.post("/projects", projectData);
+    return axios.post("/api/projects", projectData);
   },
 
   saveNewEvent: function(eventData) {
-    return axios.post("/events", eventData);
+    return axios.post("/api/events", eventData);
   },
 
   saveNewSupervisor: function(supervisorData) {
-    return axios.post("/supervisors", supervisorData);
-  },
-
-
+    return axios.post("/api/supervisors", supervisorData);
+  }
 };
