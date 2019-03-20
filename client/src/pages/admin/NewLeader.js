@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
-import API from "../utils/API";
+import API from "../../utils/API";
 
-class NewEvent extends Component {
+
+class NewLeader extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       name: "",
-      date: "",
-      hours: "",
+      org: "",
+      project: "",
+      area: "",
     };
   }
 
@@ -25,14 +27,15 @@ class NewEvent extends Component {
     event.preventDefault();
     debugger;
     const name = this.state.name.trim();
-    const date = this.state.date.trim();
-    const hours = this.state.hours.trim();
+    const org = this.state.org.trim();
+    const project = this.state.project.trim();
+    const area = this.state.area.trim();
 
-    
-      API.saveExample({
+      API.saveNewSupervisor({
         name,
-        date,
-        hours
+        org,
+        project,
+        area,
       }).then(() => {
 
         this.props.history.push('/');
@@ -56,13 +59,12 @@ class NewEvent extends Component {
   render() {
 
     const name = this.state.name;
-    const date = this.state.date;
-    const hours = this.state.hours;
- 
+    const org = this.state.org;
+    const project = this.state.project;
+    const area = this.state.area;
     return (
-      
       <form className="container" onSubmit={this.submitExample}>
-        <h1>Add a New Event</h1>
+        <h1>Add a New Leader</h1>
         <div className="form-group">
           <label
             htmlFor="name">
@@ -76,33 +78,48 @@ class NewEvent extends Component {
             onChange={this.handleInputChange} 
             value={name} />
         </div>
-        <div className="form-group">
-          <label 
-            htmlFor="description">
-            Date:
-          </label>
-          <textarea 
-            className="form-control"
-            name="date" 
-            placeholder="date"
-            onChange={this.handleInputChange}
-            value={date} />
-        </div>
+
         <div className="form-group">
           <label
-            htmlFor="hours">
-            Hours Validated :
+            htmlFor="org">
+            Assigned Organization:
           </label>
           <input
             className="form-control" 
-            name="hours" 
+            name="org" 
             type="text"
-            placeholder="hours"
+            placeholder="org"
             onChange={this.handleInputChange} 
-            value={hours} />
+            value={org} />
         </div>
-  
-      <button 
+        <div className="form-group">
+          <label
+            htmlFor="project">
+            Assigned Project:
+          </label>
+          <input
+            className="form-control" 
+            name="project" 
+            type="text"
+            placeholder="project"
+            onChange={this.handleInputChange} 
+            value={project} />
+        </div>
+        <div className="form-group">
+          <label
+            htmlFor="area">
+            Assigned Area:
+          </label>
+          <input
+            className="form-control" 
+            name="area" 
+            type="text"
+            placeholder="area"
+            onChange={this.handleInputChange} 
+            value={area} />
+        </div>
+
+        <button 
           className="btn btn-primary"
           type="submit">
           Submit
@@ -112,5 +129,4 @@ class NewEvent extends Component {
   }
 }
 
-
-export default NewEvent;
+export default NewLeader;

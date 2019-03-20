@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import API from "../utils/API";
+import API from "../../utils/API";
 
 
 class NewStudent extends Component {
@@ -32,7 +32,7 @@ class NewStudent extends Component {
     const id = this.state.id.trim();
 
     
-      API.saveExample({
+      API.saveNewStudent({
         name,
         university,
         project,
