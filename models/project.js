@@ -5,7 +5,7 @@ const projectSchema = new Schema({
   name: { type: String, required: true },
   organization: { type: String, required: true },
   area: { type: String, required: true },
-  supervisor: { type: String, required: true },
+  leader: { type: String, required: true },
   students: { type: Number, required: true }
 });
 
