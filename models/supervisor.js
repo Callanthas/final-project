@@ -5,7 +5,9 @@ const supervisorSchema = new Schema({
   name: { type: String, required: true },
   organization: { type: String, default: "", required: true },
   project: { type: String, default: "", required: true },
-  area: { type: String, default: "", required: true }
+  area: { type: String, default: "", required: true },
+  username: { type: String, required: true },
+  password: { type: String, required: true }
 });
 
 const Supervisor = mongoose.model("Supervisor", supervisorSchema);

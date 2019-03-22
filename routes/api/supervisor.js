@@ -23,4 +23,8 @@ router
     controller.remove(req, res, collection);
   });
 
+  router.route("/login")
+  .post((req, res) => {
+    controller.checkLogin(req, res, collection);
+  })
 module.exports = router;
