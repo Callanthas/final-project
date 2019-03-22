@@ -21,9 +21,10 @@ class StudentIndex extends Component {
     return (
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
             
+            
             <li className="nav-item active">
-              <Link className="nav-link" to="/">
-                Student inf.
+              <Link className="nav-link" to="/home">
+                Home
               </Link>
             </li>
 
