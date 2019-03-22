@@ -30,7 +30,7 @@ function getNav(currentRole) {
 
 function App() {
   const role = new Array("ADMIN", "STUDENT", "TEACHER");
-  const currentRole = "STUDENT"
+  const currentRole = "ADMIN";
 
   return (
     <Router>

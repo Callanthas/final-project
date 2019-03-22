@@ -24,7 +24,6 @@ class NewStudent extends Component {
 
   submitExample = event => {
     event.preventDefault();
-    debugger;
     const name = this.state.name.trim();
     const university = this.state.university.trim();
     const project = this.state.project.trim();

@@ -23,4 +23,10 @@ router
     controller.remove(req, res, collection);
   });
 
+
+router.route("/login")
+  .post((req, res) => {
+    console.log("logging in " +  collection);
+    controller.checkLogin(req, res, collection);
+  })
 module.exports = router;
