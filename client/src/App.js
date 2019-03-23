@@ -13,7 +13,7 @@ import NewProject from "./pages/admin/NewProject.js";
 import NewEvent from "./pages/admin/NewEvent.js";
 import Login from "./pages/login";
 import LoginNav from "./components/LoginNav";
-
+import Teacher from "./pages/teacher/Teacher"
 
 function getNav(currentRole) {
   switch(currentRole) {
@@ -22,15 +22,16 @@ function getNav(currentRole) {
     case 'STUDENT':
       return <StudentNav/>;
     case 'TEACHER':
-      return <LoginNav/>;
+      return <Teacher/>;
     default:
       return <LoginNav/>;
   }
 }
 
+
 function App() {
-  const role = new Array("ADMIN", "STUDENT", "TEACHER");
-  const currentRole = "STUDENT"
+  //CHANGE LINE BELLOW TO CHANGE VIEWS
+  const currentRole = "TEACHER"
 
   return (
     <Router>
@@ -45,6 +46,9 @@ function App() {
           <Route exact path="/NewLeader/" component={NewLeader} />
           <Route exact path="/NewProject/" component={NewProject} />
           <Route exact path="/Admin/" component={Admin} />
+          <Route exact path="/Events/" component={Events} />
+          <Route exact path="/Teacher/" component={Teacher} />
+
           <Route component={NoMatch} />
         </Switch>
       </>
