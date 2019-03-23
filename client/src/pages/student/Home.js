@@ -69,8 +69,9 @@ class Home extends Component {
           <Clock />
         </h2>
         <div className="jumbotron">
-          <button id="loading_bttn">
-            <LoadingButton />
+        <button className="btn btn-info" type="button">        
+        
+                    <LoadingButton />
           </button>
         </div>
         <Card>

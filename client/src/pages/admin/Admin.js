@@ -41,6 +41,7 @@ class Admin extends Component {
           <br />
           Check the guide bellow if you have any doubts.{" "}
         </div>
+        
       </div>
     );
   }

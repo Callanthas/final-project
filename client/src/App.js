@@ -31,7 +31,7 @@ function getNav(currentRole) {
 
 function App() {
   //CHANGE LINE BELLOW TO CHANGE VIEWS
-  const currentRole = "TEACHER";
+  const currentRole = "ADMIN";
 
   return (
     <Router>
