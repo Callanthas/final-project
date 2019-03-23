@@ -18,7 +18,7 @@ class Nav extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="admin-nav">
         <h1 className="navbar-brand">
           <Link className="nav-link" to="/admin">
             Admin{" "}

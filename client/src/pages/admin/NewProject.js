@@ -124,8 +124,8 @@ class NewProject extends Component {
           />
         </div>
 
-        <button className="btn btn-primary" type="submit">
-          Submit
+        <button className="btn btn-info" type="button">
+                  Submit
         </button>
       </form>
     );

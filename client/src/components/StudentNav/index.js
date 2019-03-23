@@ -19,7 +19,7 @@ class StudentIndex extends Component {
   render() {
 
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="student-nav">
 
         <li className="nav-item active">
           <Link className="nav-link" to="/home">

@@ -93,8 +93,8 @@ class NewEvent extends Component {
           />
         </div>
 
-        <button className="btn btn-primary" type="submit">
-          Submit
+        <button className="btn btn-info" type="submit">
+                  Submit
         </button>
       </form>
     );

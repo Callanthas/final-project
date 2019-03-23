@@ -17,7 +17,7 @@ class LoginNav extends Component {
   }
 
   render() {
-    return <nav className="navbar navbar-expand-lg navbar-dark bg-dark" />;
+    return <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="login-nav" />;
   }
 }
 
