@@ -1,15 +1,15 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 class Home extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      examples: [],
+      student: [],
       title: "",
       description: ""
     };
@@ -20,9 +20,9 @@ class Home extends Component {
   }
 
   loadExamples = () => {
-    API.getExamples()
+    API.getStudent()
       .then(res => {
-        this.setState({ examples: res.data, title: "", description: "" });
+        this.setState({ student: res.data, id: "", hours: "" });
       })
       .catch(err => {
         console.log(err);
@@ -32,51 +32,65 @@ class Home extends Component {
   getExamplesAsList = () => {
     const examples = this.state.examples;
 
-    const listElements = examples.map((element) => {
+    const listElements = examples.map(element => {
+      console.log(element);
       return (
-        <li key={element._id}>
-          <Link to={`/example/${element._id}`}>
-            <p>
-              {element.title}
-            </p>
-          </Link>
-        </li>
+        <Link to={`/student/${element._id}`}>
+          <p>{element.name}</p>
+        </Link>
       );
     });
 
-    if (listElements.length === 0)
-      return <h3>No Results to Display</h3>;
+    if (listElements.length === 0) return <h3>No Results to Display</h3>;
 
     return <ul>{listElements}</ul>;
-  }
+  };
+  getStudent = () => {
+    const student = this.state.student;
+    const listElements = student.map(element => {
+      return (
+        <Link to={`/api/student/${element._id}`}>
+          <p>{element.studentID}</p>
+        </Link>
+      );
+    });
 
+    if (listElements.length === 0) return <h3>No Results </h3>;
+
+    return <ul>{listElements}</ul>;
+  };
 
   render() {
-    const examplesList = this.getExamplesAsList();
+    const student = this.getStudent();
     return (
       <div className="container">
-        <h1>Hello Laura</h1>
-        <h2><Clock /></h2>
+        <h1>Hello{student}</h1>
+        <h2>
+          <Clock />
+        </h2>
         <div className="jumbotron">
-          {examplesList}
-          <LoadingButton />
+          <button id="loading_bttn">
+            <LoadingButton />
+          </button>
         </div>
         <Card>
           <Card.Header>Quick Information</Card.Header>
           <Card.Body>
             <blockquote className="blockquote mb-0">
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">Cras justo odio: ahahah </li>
-                <li className="list-group-item">Dapibus ac facilisis: inhahahha</li>
-                <li className="list-group-item">Vestibulum at eros:aabahha</li>
+                <li className="list-group-item">StudentID: {student}</li>
+                <li className="list-group-item">Project:{student}</li>
+                <li className="list-group-item">Hours: {student}</li>
               </ul>
             </blockquote>
           </Card.Body>
-        </Card>;
+        </Card>
+        ;
       </div>
     );
   }
 }
+
 function simulateNetworkRequest() {
   return new Promise(resolve => setTimeout(resolve, 2000));
 }
@@ -89,16 +103,22 @@ class LoadingButton extends React.Component {
 
     this.state = {
       isLoading: false,
+      loggedIn: false
     };
   }
 
   handleClick() {
     this.setState({ isLoading: true }, () => {
       simulateNetworkRequest().then(() => {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, status: !this.state.status });
       });
     });
   }
+
+  getButtonTextByStatus = () => {
+    const { status } = this.state;
+    return status ? "Check Out" : "Check In";
+  };
 
   render() {
     const { isLoading } = this.state;
@@ -109,12 +129,11 @@ class LoadingButton extends React.Component {
         disabled={isLoading}
         onClick={!isLoading ? this.handleClick : null}
       >
-        {isLoading ? 'Loading…' : 'in'}
+        {isLoading ? "Loading…" : this.getButtonTextByStatus()}
       </Button>
     );
   }
 }
-
 
 class Clock extends React.Component {
   constructor(props) {
@@ -123,10 +142,7 @@ class Clock extends React.Component {
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
+    this.timerID = setInterval(() => this.tick(), 1000);
   }
 
   componentWillUnmount() {

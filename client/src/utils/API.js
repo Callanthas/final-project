@@ -1,6 +1,17 @@
 import axios from "axios";
 
 export default {
+  getStudents: function() {
+    return axios.get("/api/students");
+  },
+  // Gets the example with the given id
+  getStudent: function(id) {
+    return axios.get(`/api/students/${id}`);
+  },
+  getProject: function(id) {
+    return axios.get(`/api/projects/${id}`);
+  },
+
   // Gets all examples
   getExamples: function() {
     return axios.get("/api/example");

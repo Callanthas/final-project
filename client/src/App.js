@@ -2,11 +2,11 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/main.css";
 import Home from "./pages/student/Home.js";
-import Events from "./pages/student/Events.js";
+//import Events from "./pages/student/Events.js";
 import NoMatch from "./pages/NoMatch";
 import AdminNav from "./components/AdminNav";
 import StudentNav from "./components/StudentNav";
-import NewStudent from"./pages/admin/NewStudent.js";
+import NewStudent from "./pages/admin/NewStudent.js";
 import Admin from "./pages/admin/Admin.js";
 import NewLeader from "./pages/admin/NewLeader.js";
 import NewProject from "./pages/admin/NewProject.js";
@@ -23,8 +23,9 @@ function getNav(currentRole) {
       return <StudentNav/>;
     case 'TEACHER':
       return <Teacher/>;
+
     default:
-      return <LoginNav/>;
+      return <LoginNav />;
   }
 }
 
@@ -36,10 +37,9 @@ function App() {
   return (
     <Router>
       <>
-      {getNav(currentRole)}
+        {getNav(currentRole)}
         <Switch>
-
-        <Route exact path="/" component={Login} />
+          <Route exact path="/" component={Login} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/NewStudent/" component={NewStudent} />
           <Route exact path="/NewEvent/" component={NewEvent} />
