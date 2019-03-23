@@ -1,8 +1,8 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 class Home extends Component {
   constructor(props) {
@@ -21,60 +21,57 @@ class Home extends Component {
 
   loadExamples = () => {
     API.getStudent()
-       .then(res => {
+      .then(res => {
         this.setState({ student: res.data, id: "", hours: "" });
       })
       .catch(err => {
         console.log(err);
-      });  
+      });
   };
 
   getExamplesAsList = () => {
     const examples = this.state.examples;
 
-    const listElements = examples.map((element) => {
+    const listElements = examples.map(element => {
       console.log(element);
       return (
-          <Link to={`/student/${element._id}`}>
-            <p>
-              {element.name}
-            </p>
-          </Link>
+        <Link to={`/student/${element._id}`}>
+          <p>{element.name}</p>
+        </Link>
       );
     });
 
-    if (listElements.length === 0)
-      return <h3>No Results to Display</h3>;
+    if (listElements.length === 0) return <h3>No Results to Display</h3>;
 
     return <ul>{listElements}</ul>;
-  }
-getStudent = () =>{
-  const student = this.state.student;
-  const listElements = student.map((element) => {
-    return (
+  };
+  getStudent = () => {
+    const student = this.state.student;
+    const listElements = student.map(element => {
+      return (
         <Link to={`/api/student/${element._id}`}>
-          <p>
-            {element.studentID}
-
-          </p>
+          <p>{element.studentID}</p>
         </Link>
-    );
-  });
+      );
+    });
 
-  if (listElements.length === 0)
-    return <h3>No Results </h3>;
+    if (listElements.length === 0) return <h3>No Results </h3>;
 
-  return <ul>{listElements}</ul>;
-}
+    return <ul>{listElements}</ul>;
+  };
 
   render() {
     const student = this.getStudent();
     return (
       <div className="container">
         <h1>Hello{student}</h1>
-        <h2><Clock /></h2>
+        <h2>
+          <Clock />
+        </h2>
         <div className="jumbotron">
-          <button id="loading_bttn" ><LoadingButton /></button>
+          <button id="loading_bttn">
+            <LoadingButton />
+          </button>
         </div>
         <Card>
           <Card.Header>Quick Information</Card.Header>
@@ -87,7 +84,8 @@ getStudent = () =>{
               </ul>
             </blockquote>
           </Card.Body>
-        </Card>;
+        </Card>
+        ;
       </div>
     );
   }
@@ -118,12 +116,12 @@ class LoadingButton extends React.Component {
   }
 
   getButtonTextByStatus = () => {
-    const {status} = this.state;
+    const { status } = this.state;
     return status ? "Check Out" : "Check In";
-  }
+  };
 
   render() {
-    const { isLoading, status } = this.state;
+    const { isLoading } = this.state;
 
     return (
       <Button
@@ -131,16 +129,11 @@ class LoadingButton extends React.Component {
         disabled={isLoading}
         onClick={!isLoading ? this.handleClick : null}
       >
-        {
-          isLoading 
-          ? 'Loading…' 
-          : this.getButtonTextByStatus()
-        }
+        {isLoading ? "Loading…" : this.getButtonTextByStatus()}
       </Button>
     );
   }
 }
-
 
 class Clock extends React.Component {
   constructor(props) {
@@ -149,10 +142,7 @@ class Clock extends React.Component {
   }
 
   componentDidMount() {
-    this.timerID = setInterval(
-      () => this.tick(),
-      1000
-    );
+    this.timerID = setInterval(() => this.tick(), 1000);
   }
 
   componentWillUnmount() {

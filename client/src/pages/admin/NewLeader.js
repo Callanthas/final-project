@@ -9,7 +9,9 @@ class NewLeader extends Component {
       name: "",
       org: "",
       project: "",
-      area: ""
+      area: "",
+      username: "",
+      password: ""
     };
   }
 
@@ -29,12 +31,16 @@ class NewLeader extends Component {
     const organization = this.state.org.trim();
     const project = this.state.project.trim();
     const area = this.state.area.trim();
+    const username = this.state.username.trim();
+    const password = this.state.password.trim();
 
     API.saveNewSupervisor({
       name,
       organization,
       project,
-      area
+      area,
+      username,
+      password
     }).then(() => {
       this.props.history.push("/");
     });
@@ -59,6 +65,9 @@ class NewLeader extends Component {
     const org = this.state.org;
     const project = this.state.project;
     const area = this.state.area;
+    const username = this.state.username;
+    const password = this.state.password;
+
     return (
       <form className="container" onSubmit={this.submitExample}>
         <h1>Add a New Leader</h1>
@@ -105,6 +114,30 @@ class NewLeader extends Component {
             placeholder="area"
             onChange={this.handleInputChange}
             value={area}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="username">Assigned Username:</label>
+          <input
+            className="form-control"
+            name="username"
+            type="text"
+            placeholder="username"
+            onChange={this.handleInputChange}
+            value={username}
+          />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="password">Assigned Password:</label>
+          <input
+            className="form-control"
+            name="password"
+            type="text"
+            placeholder="password"
+            onChange={this.handleInputChange}
+            value={password}
           />
         </div>
 

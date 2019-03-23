@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import API from "../../utils/API";
-import axios from "axios";
+//import axios from "axios";
 
 class NewEvent extends Component {
   constructor(props) {
@@ -9,36 +9,34 @@ class NewEvent extends Component {
     this.state = {
       name: "",
       date: "",
-      hours: "",
+      hours: ""
     };
   }
 
-  handleInputChange = (event) => {
+  handleInputChange = event => {
     const name = event.target.name;
     const value = event.target.value;
-    
+
     this.setState({
       [name]: value
     });
-} 
+  };
 
-  submitExample = (event) => {
+  submitExample = event => {
     event.preventDefault();
     debugger;
     const name = this.state.name.trim();
     const date = this.state.date.trim();
     const hours = this.state.hours.trim();
 
-    
-      API.saveNewEvent({
-        name,
-        date,
-        hours
-      }).then(() => {
-
-        this.props.history.push('/');
-      });
-  }
+    API.saveNewEvent({
+      name,
+      date,
+      hours
+    }).then(() => {
+      this.props.history.push("/");
+    });
+  };
 
   /* areInputsValid = (title, description) => {
     if(!title) {
@@ -55,63 +53,52 @@ class NewEvent extends Component {
   } */
 
   render() {
-
     const name = this.state.name;
     const date = this.state.date;
     const hours = this.state.hours;
- 
+
     return (
-      
       <form className="container" onSubmit={this.submitExample}>
         <h1>Add a New Event</h1>
         <div className="form-group">
-          <label
-            htmlFor="name">
-            Name:
-          </label>
+          <label htmlFor="name">Name:</label>
           <input
-            className="form-control" 
-            name="name" 
+            className="form-control"
+            name="name"
             type="text"
             placeholder="name"
-            onChange={this.handleInputChange} 
-            value={name} />
+            onChange={this.handleInputChange}
+            value={name}
+          />
         </div>
         <div className="form-group">
-          <label 
-            htmlFor="description">
-            Date:
-          </label>
-          <textarea 
+          <label htmlFor="description">Date:</label>
+          <textarea
             className="form-control"
-            name="date" 
+            name="date"
             placeholder="date"
             onChange={this.handleInputChange}
-            value={date} />
+            value={date}
+          />
         </div>
         <div className="form-group">
-          <label
-            htmlFor="hours">
-            Hours Validated :
-          </label>
+          <label htmlFor="hours">Hours Validated :</label>
           <input
-            className="form-control" 
-            name="hours" 
+            className="form-control"
+            name="hours"
             type="text"
             placeholder="hours"
-            onChange={this.handleInputChange} 
-            value={hours} />
+            onChange={this.handleInputChange}
+            value={hours}
+          />
         </div>
-  
-      <button 
-          className="btn btn-primary"
-          type="submit">
+
+        <button className="btn btn-primary" type="submit">
           Submit
         </button>
       </form>
     );
   }
 }
-
 
 export default NewEvent;
