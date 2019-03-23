@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
-import { Link } from "react-router-dom";
+import React, { Component } from "react";
+/* import { Link } from "react-router-dom";
 import Dropdown from 'react-bootstrap/Dropdown';
-import FormControl from 'react-bootstrap/FormControl';
+import FormControl from 'react-bootstrap/FormControl'; */
 
 class LoginNav extends Component {
   constructor(props, context) {
@@ -15,17 +15,10 @@ class LoginNav extends Component {
 
     this.props.onClick(e);
   }
-  
+
   render() {
-   
-      return (
-        <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-
-        </nav>
-      );
-    
-    }
-  };
-
+    return <nav className="navbar navbar-expand-lg navbar-dark bg-dark" />;
+  }
+}
 
 export default LoginNav;
