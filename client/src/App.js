@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import "./assets/main.css";
 import Home from "./pages/student/Home.js";
-//import Events from "./pages/student/Events.js";
+import Events from "./pages/student/Events.js";
 import NoMatch from "./pages/NoMatch";
 import AdminNav from "./components/AdminNav";
 import StudentNav from "./components/StudentNav";
@@ -13,26 +13,25 @@ import NewProject from "./pages/admin/NewProject.js";
 import NewEvent from "./pages/admin/NewEvent.js";
 import Login from "./pages/login";
 import LoginNav from "./components/LoginNav";
-import Teacher from "./pages/teacher/Teacher"
+import Teacher from "./pages/teacher/Teacher";
 
 function getNav(currentRole) {
-  switch(currentRole) {
-    case 'ADMIN':
-      return <AdminNav/>;
-    case 'STUDENT':
-      return <StudentNav/>;
-    case 'TEACHER':
-      return <Teacher/>;
+  switch (currentRole) {
+    case "ADMIN":
+      return <AdminNav />;
+    case "STUDENT":
+      return <StudentNav />;
+    case "TEACHER":
+      return <Teacher />;
 
     default:
       return <LoginNav />;
   }
 }
 
-
 function App() {
   //CHANGE LINE BELLOW TO CHANGE VIEWS
-  const currentRole = "TEACHER"
+  const currentRole = "TEACHER";
 
   return (
     <Router>
