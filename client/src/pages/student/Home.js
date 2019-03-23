@@ -20,7 +20,7 @@ class Home extends Component {
   }
 
   loadExamples = () => {
-    API.getStudent()
+    API.getStudents()
       .then(res => {
         this.setState({ student: res.data, id: "", hours: "" });
       })
