@@ -9,7 +9,8 @@ class NewStudent extends Component {
       name: "",
       university: "",
       project: "",
-      id: ""
+      id: "",
+      password: ""
     };
   }
 
@@ -22,20 +23,28 @@ class NewStudent extends Component {
     });
   };
 
-  submitExample = event => {
+  submitStudent = event => {
     event.preventDefault();
     const name = this.state.name.trim();
     const university = this.state.university.trim();
     const project = this.state.project.trim();
     const studentID = this.state.id.trim();
-
-    API.saveNewStudent({
-      name,
-      university,
-      project,
-      studentID
-    }).then(() => {
-      this.props.history.push("/");
+    const password = this.state.password.trim();
+    console.log(name, university, project, studentID, password);
+    API.signupUser({
+      username: studentID,
+      password,
+      type: "student"
+    }).then(res => {
+      if (res) {
+        API.saveNewStudent({
+          name,
+          university,
+          project,
+          username: studentID,
+          userID: res.data._id
+        });
+      }
     });
   };
 
@@ -54,12 +63,9 @@ class NewStudent extends Component {
   } */
 
   render() {
-    const name = this.state.name;
-    const university = this.state.university;
-    const project = this.state.project;
-    const id = this.state.id;
+    const { name, university, project, id, password } = this.state;
     return (
-      <form className="container" onSubmit={this.submitExample}>
+      <form className="container" onSubmit={this.submitStudent}>
         <h1>Add a New Social Service Student</h1>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -107,8 +113,20 @@ class NewStudent extends Component {
           />
         </div>
 
-        <button className="btn btn-info" type="button">
-                  Submit
+        <div className="form-group">
+          <label htmlFor="id">Password:</label>
+          <input
+            className="form-control"
+            name="password"
+            type="text"
+            placeholder="password"
+            onChange={this.handleInputChange}
+            value={password}
+          />
+        </div>
+
+        <button className="btn btn-primary" type="submit">
+          Submit
         </button>
       </form>
     );

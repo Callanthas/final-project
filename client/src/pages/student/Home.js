@@ -9,62 +9,43 @@ class Home extends Component {
     super(props);
 
     this.state = {
-      student: [],
-      title: "",
-      description: ""
+      name: "",
+      university: "",
+      project: "",
+      username: "",
+      hours: 0,
+      checkin: "",
+      checkout: ""
     };
   }
 
   componentDidMount() {
-    this.loadExamples();
+    API.getStudent(this.props.match.params.id)
+    .then(res => {
+      if (res.data.user) {
+        const { name, university, project, username, hours, checkin, checkout } = res.data.dbModel;
+        this.setState({
+          name, university, project, username, hours, checkin, checkout
+        });
+      }
+      else {
+        this.props.history.push("/");
+      }
+    })
   }
 
-  loadExamples = () => {
-    API.getStudents()
-      .then(res => {
-        this.setState({ student: res.data, id: "", hours: "" });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  };
-
-  getExamplesAsList = () => {
-    const examples = this.state.examples;
-
-    const listElements = examples.map(element => {
-      console.log(element);
-      return (
-        <Link to={`/student/${element._id}`}>
-          <p>{element.name}</p>
-        </Link>
-      );
+  logout = () => {
+    API.logoutUser()
+    .then(res => {
+      this.props.history.push("/");
     });
-
-    if (listElements.length === 0) return <h3>No Results to Display</h3>;
-
-    return <ul>{listElements}</ul>;
-  };
-  getStudent = () => {
-    const student = this.state.student;
-    const listElements = student.map(element => {
-      return (
-        <Link to={`/api/student/${element._id}`}>
-          <p>{element.studentID}</p>
-        </Link>
-      );
-    });
-
-    if (listElements.length === 0) return <h3>No Results </h3>;
-
-    return <ul>{listElements}</ul>;
-  };
+  }
 
   render() {
-    const student = this.getStudent();
+    const { name, university, project, username, hours, checkin, checkout } = this.state;
     return (
       <div className="container">
-        <h1>Hello{student}</h1>
+        <h1>Hello {name}</h1>
         <h2>
           <Clock />
         </h2>
@@ -79,14 +60,14 @@ class Home extends Component {
           <Card.Body>
             <blockquote className="blockquote mb-0">
               <ul className="list-group list-group-flush">
-                <li className="list-group-item">StudentID: {student}</li>
-                <li className="list-group-item">Project:{student}</li>
-                <li className="list-group-item">Hours: {student}</li>
+                <li className="list-group-item">StudentID: {username}</li>
+                <li className="list-group-item">Project: {project}</li>
+                <li className="list-group-item">Hours: {hours}</li>
               </ul>
             </blockquote>
           </Card.Body>
         </Card>
-        ;
+        <button className="btn btn-info" type="button" onClick={this.logout}>Log out</button>
       </div>
     );
   }

@@ -7,7 +7,8 @@ const supervisorSchema = new Schema({
   project: { type: String, default: "", required: true },
   area: { type: String, default: "", required: true },
   username: { type: String, required: true },
-  password: { type: String, required: true }
+  password: { type: String, required: true },
+  userID: Schema.Types.ObjectId
 });
 
 const Supervisor = mongoose.model("Supervisor", supervisorSchema);
