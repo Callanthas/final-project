@@ -20,23 +20,27 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    API.getStudent(this.props.match.params.id)
+    API.getAny()
+      .then(res => {
+        if (res.data.type !== 'student') {
+          this.props.history.push('/');
+        }
+        else {
+          API.getStudent(this.props.match.params.id)
     .then(res => {
-      if (res.data.user) {
         const { name, university, project, username, hours, checkin, checkout } = res.data.dbModel;
         this.setState({
           name, university, project, username, hours, checkin, checkout
         });
-      }
-      else {
-        this.props.history.push("/");
-      }
     })
+        }
+    });
   }
 
   logout = () => {
     API.logoutUser()
     .then(res => {
+      localStorage.removeItem('loggedIn');
       this.props.history.push("/");
     });
   }

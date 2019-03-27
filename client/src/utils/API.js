@@ -47,5 +47,9 @@ export default {
 
   saveNewSupervisor: function(supervisorData) {
     return axios.post("/api/supervisors", supervisorData);
+  },
+  
+  getAny: function() {
+    return axios.get("/api");
   }
 };

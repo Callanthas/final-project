@@ -10,15 +10,14 @@ class Admin extends Component {
     };
   }
 
-  componentDidMount() {
-    API.getExample(this.props.match.params.id)
-      .then(res => {
-        this.setState({ example: res.data });
-      })
-      .catch(err => {
-        console.log(err);
-      });
-  }
+  componentDidMount () {
+    API.getAny()
+    .then(res => {
+      if (res.data.type !== 'admin') {
+        this.props.history.push('/');
+      }
+    }); 
+   }
 
   onDeleteClick = () => {
     const id = this.state.example._id;

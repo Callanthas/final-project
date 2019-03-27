@@ -14,6 +14,15 @@ class NewProject extends Component {
     };
   }
 
+  componentDidMount () {
+    API.getAny()
+    .then(res => {
+      if (res.data.type !== 'admin') {
+        this.props.history.push('/');
+      }
+    }); 
+   }
+
   handleInputChange = event => {
     const name = event.target.name;
     const value = event.target.value;

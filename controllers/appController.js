@@ -57,7 +57,7 @@ module.exports = {
     } = req.body;
 
     db[collection].findOne({
-        username: username
+        username
       })
       .then(user => {
         console.log("user:", user);
