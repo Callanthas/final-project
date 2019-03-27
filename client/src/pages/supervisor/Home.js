@@ -5,73 +5,94 @@ import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 
 class Supervisor extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      name: "",
-      organization: "",
-      project: "",
-      area: "",
-      username: ""
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            students: [],
+            title: "",
+            description: "",
+            name: "",
+            project: "",
+        };
+    }
+
+    componentDidMount() {
+        this.loadExamples();
+        let maestro;
+      
+    }
+
+    loadExamples = () => {
+        
+        API.getStudents()
+            .then(res => {
+                this.setState({ students: res.data, id: "", project: "", checkin: "" });
+            })
+
+            .catch(err => {
+                console.log(err);
+            });
+            
+        API.getSupervisor(this.props.match.params.id)
+            .then(res => {
+                this.setState({ supervisor: res.data, id: "", project: ""});
+    
+            })
+
+            .catch(err => {
+                console.log(err);
+            });
+
+        
     };
-  }
-
-  componentDidMount() {
-    API.getByType("supervisors", this.props.match.params.id).then(res => {
-      console.log(res.data);
-      if (res.data.user) {
-        const {
-          name,
-          organization,
-          project,
-          area,
-          username
-        } = res.data.dbModel;
-        this.setState({
-          name,
-          organization,
-          project,
-          area,
-          username
+    getStudent = () => {
+        const supervisor = this.state.supervisor;
+        const student = this.state.students;
+        console.log(supervisor,student);
+        const listElements = student.map((element) => {
+            if (supervisor && supervisor.dbModel.project==element.project)
+            return (
+                <li key={element._id}>
+                    <Link to={`/api/student/${element._id}`}>
+                        <p>
+                            {element.name} + <button> in </button>
+                        </p>
+                    </Link>
+                </li>
+            );
         });
-      } else {
-        this.props.history.push("/");
-      }
-    });
-  }
 
-  logout = () => {
-    API.logoutUser().then(res => {
-      this.props.history.push("/");
-    });
-  };
+        if (listElements.length === 0)
+            return <h3>No Results </h3>;
 
-  render() {
-    return (
-      <div className="container">
-        <h1>Hello Teacher</h1>
-        <h2>
-          <Clock />
-        </h2>
-        <div className="jumbotron" />
-        <Card>
-          <Card.Header>Quick Information</Card.Header>
-          <Card.Body>
-            <blockquote className="blockquote mb-0">
-              <ul className="list-group list-group-flush">
-                {" "}
-                Students Waiting For Approval
-                <li className="list-group-item" />
-                <li className="list-group-item" />
-                <li className="list-group-item" />
-              </ul>
-            </blockquote>
-          </Card.Body>
-        </Card>
-        <button className="btn btn-info" type="button" onClick={this.logout}>
-          Log out
-        </button>
+        return listElements;
+
+    }
+
+
+
+    render() {
+        const student = this.getStudent();
+
+        return (
+            <div className="container">
+                <h1>Hello Teacher</h1>
+                <h2><Clock /></h2>
+                <Card>
+                    <Card.Header>Quick Information</Card.Header>
+                    <Card.Body>
+                        <blockquote className="blockquote mb-0">
+                            <ul className="list-group list-group-flush"> Students Waiting For Approval
+                <li className="list-group-item">{student}</li>
+                                <li className="list-group-item"></li>
+                                <li className="list-group-item"></li>
+                            </ul>
+                        </blockquote>
+                    </Card.Body>
+                </Card>;
+
       </div>
     );
   }

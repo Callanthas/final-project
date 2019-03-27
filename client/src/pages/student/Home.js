@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import API from "../../utils/API";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Events from "./Events";
 
 
 
@@ -69,6 +70,7 @@ class Home extends Component {
         <h2>
           <Clock />
         </h2>
+       <h2 id="event"><Events/></h2>
         <div className="jumbotron">
           <LoadingButton id={id} />
         </div>
@@ -108,7 +110,9 @@ class LoadingButton extends React.Component {
     };
   }
 
+
   handleClick = () => {
+
     this.setState({ isLoading: true }, () => {
       simulateNetworkRequest().then(() => {
         this.setState({ isLoading: false, status: !this.state.status });
