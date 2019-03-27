@@ -21,17 +21,15 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    API.getStudent(this.props.match.params.id).then(res => {
-      if (res.data.user) {
-        const {
-          name,
-          university,
-          project,
-          username,
-          hours,
-          checkin,
-          checkout
-        } = res.data.dbModel;
+    API.getAny()
+      .then(res => {
+        if (res.data.type !== 'student') {
+          this.props.history.push('/');
+        }
+        else {
+          API.getStudent(this.props.match.params.id)
+    .then(res => {
+        const { name, university, project, username, hours, checkin, checkout } = res.data.dbModel;
         this.setState({
           name,
           university,
@@ -41,9 +39,8 @@ class Home extends Component {
           checkin,
           checkout
         });
-      } else {
-        this.props.history.push("/");
-      }
+    })
+        }
     });
   }
 

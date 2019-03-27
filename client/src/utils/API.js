@@ -49,6 +49,11 @@ export default {
     return axios.post("/api/supervisors", supervisorData);
   },
 
+  
+  getAny: function() {
+    return axios.get("/api");
+},
+
   saveCheckIn: function(id, checkIn) {
     return axios.put(`/api/students/${id}`, checkIn);
   },

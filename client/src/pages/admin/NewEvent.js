@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-//import axios from "axios";
+import axios from "axios";
 
 class NewEvent extends Component {
   constructor(props) {
@@ -11,6 +11,15 @@ class NewEvent extends Component {
       date: "",
       hours: ""
     };
+  }
+
+  componentDidMount () {
+   API.getAny()
+   .then(res => {
+     if (res.data.type !== 'admin') {
+       this.props.history.push('/');
+     }
+   }); 
   }
 
   handleInputChange = event => {
