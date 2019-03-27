@@ -8,6 +8,7 @@ router.route("/")
     controller.findAll(req, res, collection);
   })
   .post((req, res) => {
+    console.log(req.body);
     controller.create(req, res, collection);
   });
 
@@ -23,8 +24,9 @@ router
     controller.remove(req, res, collection);
   });
 
-  router.route("/login")
-  .post((req, res) => {
-    controller.checkLogin(req, res, collection);
+  router
+  .route("/username/:username")
+  .get((req, res) => {
+    controller.findByUsername(req, res, collection);
   })
 module.exports = router;

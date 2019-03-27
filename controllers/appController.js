@@ -1,4 +1,5 @@
 const db = require("../models");
+const bcrypt = require("bcryptjs");
 
 module.exports = {
   findAll: function (req, res, collection) {
@@ -10,10 +11,20 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
+  findByUsername: function (req, res, collection) {
+    console.log(req.params);
+    db[collection]
+      .findOne({
+        username: req.params.username
+      })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
   findById: function (req, res, collection) {
+    const user = req.user; 
     db[collection]
       .findById(req.params.id)
-      .then(dbModel => res.json(dbModel))
+      .then(dbModel => res.json({dbModel, user}))
       .catch(err => res.status(422).json(err));
   },
   create: function (req, res, collection) {
@@ -40,34 +51,78 @@ module.exports = {
       .catch(err => res.status(422).json(err));
   },
   checkLogin: function (req, res, collection) {
-
-    const { username, password } = req.body;
+    const {
+      username,
+      password
+    } = req.body;
 
     db[collection].findOne({
         username: username
       })
       .then(user => {
+        console.log("user:", user);
         if (!user) {
-          return res.redirect('/login');
+          console.log("no user found");
+          return res.json(false);
         }
         bcrypt
           .compare(password, user.password)
           .then(doMatch => {
+            console.log(doMatch);
             if (doMatch) {
+              console.log("matching");
               req.session.isLoggedIn = true;
               req.session.user = user;
               return req.session.save(err => {
                 console.log(err);
-                res.redirect('/');
+                res.json(true);
               });
             }
-            res.redirect('/login');
+            return res.json(false);
           })
           .catch(err => {
             console.log(err);
-            res.redirect('/login');
+            res.send("Oops, something went wrong");
           });
+
       })
       .catch(err => console.log(err));
+  },
+  checkSignup: function (req, res, collection) {
+    const {
+      username,
+      password,
+      type
+    } = req.body;
+
+    db[collection].findOne({
+        username: username
+      })
+      .then(userDoc => {
+        if (userDoc) {
+          res.send(false);
+        }
+        return bcrypt
+          .hash(password, 12)
+          .then(hashedPassword => {
+            const user = new db[collection]({
+              username,
+              password: hashedPassword,
+              type
+            });
+            return user.save();
+          })
+          .then(result => {
+            res.json(result);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  },
+
+  logout: function (req, res) {
+    req.session.destroy();
+    res.json(true);
   }
 };

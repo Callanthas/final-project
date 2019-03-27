@@ -4,51 +4,41 @@ import API from "../../utils/API";
 import Button from 'react-bootstrap/Button'
 import Card from 'react-bootstrap/Card'
 
-class Teacher extends Component {
+class Supervisor extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            examples: [],
-            title: "",
-            description: ""
+            name: "",
+            organization: "",
+            project: "",
+            area: "",
+            username: ""
         };
     }
 
     componentDidMount() {
-        this.loadExamples();
-    }
-
-    loadExamples = () => {
-        API.getExamples()
-            .then(res => {
-                this.setState({ examples: res.data, title: "", description: "" });
-            })
-            .catch(err => {
-                console.log(err);
+        API.getByType('supervisors', this.props.match.params.id)
+        .then(res => {
+            console.log(res.data);
+          if (res.data.user) {
+            const { name, organization, project, area, username } = res.data.dbModel;
+            this.setState({
+              name, organization, project, area, username
             });
-    };
-
-    getExamplesAsList = () => {
-        const examples = this.state.examples;
-
-        const listElements = examples.map((element) => {
-            return (
-                <li key={element._id}>
-                    <Link to={`/example/${element._id}`}>
-                        <p>
-                            {element.title}
-                        </p>
-                    </Link>
-                </li>
-            );
+          }
+          else {
+            this.props.history.push("/");
+          }
+        })
+      }
+    
+      logout = () => {
+        API.logoutUser()
+        .then(res => {
+          this.props.history.push("/");
         });
-
-        if (listElements.length === 0)
-            return <h3>No Results to Display</h3>;
-
-        return <ul>{listElements}</ul>;
-    }
+      }
 
 
     render() {
@@ -147,4 +137,4 @@ class Clock extends React.Component {
         );
     }
 }
-export default Teacher;
+export default Supervisor;

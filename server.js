@@ -38,19 +38,12 @@ app.use((req, res, next) => {
   if (!req.session.user) {
     return next();
   }
-  db.Student.findById(req.session.user._id)
+  db.User.findById(req.session.user._id)
     .then(user => {
       if (user) {
         req.user = user;
         return next();
       }
-
-      db.Supervisor.findById(req.session.user._id)
-      .then(user => {
-        req.user = user;
-        next();
-      })
-      .catch(err => console.log(err));
     })
     .catch(err => console.log(err));
 });

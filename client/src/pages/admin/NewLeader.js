@@ -7,7 +7,7 @@ class NewLeader extends Component {
 
     this.state = {
       name: "",
-      org: "",
+      organization: "",
       project: "",
       area: "",
       username: "",
@@ -24,25 +24,31 @@ class NewLeader extends Component {
     });
   };
 
-  submitExample = event => {
+  submitSupervisor = event => {
     event.preventDefault();
-    debugger;
+    console.log("submitting");
     const name = this.state.name.trim();
-    const organization = this.state.org.trim();
+    const organization = this.state.organization.trim();
     const project = this.state.project.trim();
     const area = this.state.area.trim();
     const username = this.state.username.trim();
     const password = this.state.password.trim();
 
-    API.saveNewSupervisor({
-      name,
-      organization,
-      project,
-      area,
+    API.signupUser({
       username,
-      password
-    }).then(() => {
-      this.props.history.push("/");
+      password,
+      type: "supervisor"
+    }).then(res => {
+      if (res) {
+        API.saveNewSupervisor({
+          name,
+          organization,
+          project,
+          area,
+          username,
+          password
+        });
+      }
     });
   };
 
@@ -61,16 +67,15 @@ class NewLeader extends Component {
   } */
 
   render() {
-    const name = this.state.name;
-    const org = this.state.org;
-    const project = this.state.project;
-    const area = this.state.area;
-    const username = this.state.username;
-    const password = this.state.password;
+    const { name, organization, project, area, username, password } = this.state;
 
     return (
-      <form className="container" onSubmit={this.submitExample}>
-        <h1>Add a New Leader</h1>
+
+
+
+
+      <form className="container" onSubmit={this.submitSupervisor}>
+        <h1>Add a New Supervisor</h1>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
@@ -82,18 +87,17 @@ class NewLeader extends Component {
             value={name}
           />
         </div>
-
         <div className="form-group">
-          <label htmlFor="org">Assigned Organization:</label>
+          <label htmlFor="organization">Organization:</label>
           <input
             className="form-control"
-            name="org"
-            type="text"
-            placeholder="org"
+            name="organization"
+            placeholder="organization"
             onChange={this.handleInputChange}
-            value={org}
+            value={organization}
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="project">Assigned Project:</label>
           <input
@@ -105,6 +109,7 @@ class NewLeader extends Component {
             value={project}
           />
         </div>
+
         <div className="form-group">
           <label htmlFor="area">Assigned Area:</label>
           <input
@@ -118,7 +123,7 @@ class NewLeader extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="username">Assigned Username:</label>
+          <label htmlFor="username">Assigned username:</label>
           <input
             className="form-control"
             name="username"
@@ -130,7 +135,7 @@ class NewLeader extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="password">Assigned Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             className="form-control"
             name="password"
@@ -141,8 +146,8 @@ class NewLeader extends Component {
           />
         </div>
 
-        <button className="btn btn-info" type="button">
-                  Submit
+        <button className="btn btn-primary" type="submit">
+          Submit
         </button>
       </form>
     );
