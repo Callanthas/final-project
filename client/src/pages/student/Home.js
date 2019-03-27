@@ -15,34 +15,55 @@ class Home extends Component {
       username: "",
       hours: 0,
       checkin: "",
-      checkout: ""
+      checkout: "",
+      check: false
     };
   }
 
   componentDidMount() {
-    API.getStudent(this.props.match.params.id)
-    .then(res => {
+    API.getStudent(this.props.match.params.id).then(res => {
       if (res.data.user) {
-        const { name, university, project, username, hours, checkin, checkout } = res.data.dbModel;
+        const {
+          name,
+          university,
+          project,
+          username,
+          hours,
+          checkin,
+          checkout
+        } = res.data.dbModel;
         this.setState({
-          name, university, project, username, hours, checkin, checkout
+          name,
+          university,
+          project,
+          username,
+          hours,
+          checkin,
+          checkout
         });
-      }
-      else {
+      } else {
         this.props.history.push("/");
       }
-    })
-  }
-
-  logout = () => {
-    API.logoutUser()
-    .then(res => {
-      this.props.history.push("/");
     });
   }
 
+  logout = () => {
+    API.logoutUser().then(res => {
+      this.props.history.push("/");
+    });
+  };
+
   render() {
-    const { name, university, project, username, hours, checkin, checkout } = this.state;
+    const {
+      name,
+      university,
+      project,
+      username,
+      hours,
+      checkin,
+      checkout
+    } = this.state;
+    const id = this.props.match.params.id;
     return (
       <div className="container">
         <h1>Hello {name}</h1>
@@ -50,10 +71,7 @@ class Home extends Component {
           <Clock />
         </h2>
         <div className="jumbotron">
-        <button className="btn btn-info" type="button">        
-        
-                    <LoadingButton />
-          </button>
+          <LoadingButton id={id} />
         </div>
         <Card>
           <Card.Header>Quick Information</Card.Header>
@@ -67,7 +85,9 @@ class Home extends Component {
             </blockquote>
           </Card.Body>
         </Card>
-        <button className="btn btn-info" type="button" onClick={this.logout}>Log out</button>
+        <button className="btn btn-info" type="button" onClick={this.logout}>
+          Log out
+        </button>
       </div>
     );
   }
@@ -89,13 +109,20 @@ class LoadingButton extends React.Component {
     };
   }
 
-  handleClick() {
+  handleClick = () => {
     this.setState({ isLoading: true }, () => {
       simulateNetworkRequest().then(() => {
         this.setState({ isLoading: false, status: !this.state.status });
       });
     });
-  }
+    if (this.state.check) {
+      API.saveCheckOut(this.props.id, { checkOut: new Date() }).then(res => {});
+      this.setState({ check: false });
+    } else {
+      API.saveCheckIn(this.props.id, { checkIn: new Date() }).then(res => {});
+      this.setState({ check: true });
+    }
+  };
 
   getButtonTextByStatus = () => {
     const { status } = this.state;
