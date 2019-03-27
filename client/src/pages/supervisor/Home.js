@@ -1,10 +1,11 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import API from "../../utils/API";
-import Button from 'react-bootstrap/Button'
-import Card from 'react-bootstrap/Card'
+import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 
 class Supervisor extends Component {
+
     constructor(props) {
         super(props);
 
@@ -91,78 +92,75 @@ class Supervisor extends Component {
                         </blockquote>
                     </Card.Body>
                 </Card>;
+
       </div>
-        );
-    }
+    );
+  }
 }
 function simulateNetworkRequest() {
-    return new Promise(resolve => setTimeout(resolve, 2000));
+  return new Promise(resolve => setTimeout(resolve, 2000));
 }
 
 class LoadingButton extends React.Component {
-    constructor(props, context) {
-        super(props, context);
+  constructor(props, context) {
+    super(props, context);
 
-        this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this);
 
-        this.state = {
-            isLoading: false,
-        };
-    }
+    this.state = {
+      isLoading: false
+    };
+  }
 
-    handleClick() {
-        this.setState({ isLoading: true }, () => {
-            simulateNetworkRequest().then(() => {
-                this.setState({ isLoading: false });
-            });
-        });
-    }
+  handleClick() {
+    this.setState({ isLoading: true }, () => {
+      simulateNetworkRequest().then(() => {
+        this.setState({ isLoading: false });
+      });
+    });
+  }
 
-    render() {
-        const { isLoading } = this.state;
+  render() {
+    const { isLoading } = this.state;
 
-        return (
-            <Button
-                variant="primary"
-                disabled={isLoading}
-                onClick={!isLoading ? this.handleClick : null}
-            >
-                {isLoading ? 'Loading…' : 'in'}
-            </Button>
-        );
-    }
+    return (
+      <Button
+        variant="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? this.handleClick : null}
+      >
+        {isLoading ? "Loading…" : "in"}
+      </Button>
+    );
+  }
 }
 
-
 class Clock extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { date: new Date() };
-    }
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
 
-    componentDidMount() {
-        this.timerID = setInterval(
-            () => this.tick(),
-            1000
-        );
-    }
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
 
-    componentWillUnmount() {
-        clearInterval(this.timerID);
-    }
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
 
-    tick() {
-        this.setState({
-            date: new Date()
-        });
-    }
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
 
-    render() {
-        return (
-            <div>
-                <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
-            </div>
-        );
-    }
+  render() {
+    return (
+      <div>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
+      </div>
+    );
+  }
 }
 export default Supervisor;

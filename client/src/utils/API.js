@@ -6,10 +6,10 @@ export default {
   },
   // Gets the example with the given id
   getStudent: function(id) {
-    return axios.get(`/api/students/${id}` );
+    return axios.get(`/api/students/${id}`);
   },
   getProject: function(id) {
-    return axios.get(`/api/projects/${id}` );
+    return axios.get(`/api/projects/${id}`);
   },
   getSupervisor: function(id) {
     return axios.get(`/api/supervisors/${id}` );
@@ -17,7 +17,7 @@ export default {
 
 
   getByType: function(type, id) {
-    return axios.get(`/api/${type}/${id}`)
+    return axios.get(`/api/${type}/${id}`);
   },
 
   getByUsername: function(type, username) {
@@ -51,5 +51,18 @@ export default {
 
   saveNewSupervisor: function(supervisorData) {
     return axios.post("/api/supervisors", supervisorData);
+  },
+
+  
+  getAny: function() {
+    return axios.get("/api");
+},
+
+  saveCheckIn: function(id, checkIn) {
+    return axios.put(`/api/students/${id}`, checkIn);
+  },
+
+  saveCheckOut: function(id, checkOut) {
+    return axios.put(`/api/students/${id}`, checkOut);
   }
 };
