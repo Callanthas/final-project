@@ -18,12 +18,17 @@ class LoginNav extends Component {
 
   render() {
     return (
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="login-nav">
-          <Link to="/login/student">Student</Link>
-          <Link to="/login/supervisor">Supervisor</Link>
-          <Link to="/login/admin">Administrator</Link>
-        </nav>
-    )
+      <nav
+        className="navbar navbar-expand-lg navbar-dark bg-dark"
+        id="login-nav"
+      >
+        <Link to="/login/student">Student</Link>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Link to="/login/supervisor">Supervisor</Link>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+        <Link to="/login/admin">Administrator</Link>
+      </nav>
+    );
   }
 }
 
