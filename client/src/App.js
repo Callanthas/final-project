@@ -13,6 +13,8 @@ import NewEvent from "./pages/admin/NewEvent.js";
 import Login from "./pages/login";
 import StudentLogin from "./pages/login/student";
 import SupervisorLogin from "./pages/login/supervisor";
+import AdminLogin from "./pages/login/admin";
+
 
 
 class App extends Component {
@@ -27,9 +29,9 @@ class App extends Component {
             <Route exact path="/NewLeader/" component={NewLeader} />
             <Route exact path="/NewProject/" component={NewProject} />
             <Route exact path="/Admin/" component={Admin} />
-            <Route exact path="/login/admin" component={Admin} />
             <Route exact path="/login/student" component={StudentLogin} />
             <Route exact path="/login/supervisor" component={SupervisorLogin} />
+            <Route exact path="/login/admin" component={AdminLogin} />
             <Route exact path="/student/:id" component={StudentHome} />
             <Route exact path="/supervisor/:id" component={SupervisorHome} />
             <Route component={NoMatch} />
