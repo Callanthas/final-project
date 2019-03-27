@@ -11,6 +11,10 @@ export default {
   getProject: function(id) {
     return axios.get(`/api/projects/${id}` );
   },
+  getSupervisor: function(id) {
+    return axios.get(`/api/supervisors/${id}` );
+  },
+
 
   getByType: function(type, id) {
     return axios.get(`/api/${type}/${id}`)

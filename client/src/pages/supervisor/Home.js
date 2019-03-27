@@ -9,54 +9,82 @@ class Supervisor extends Component {
         super(props);
 
         this.state = {
+            students: [],
+            title: "",
+            description: "",
             name: "",
-            organization: "",
             project: "",
-            area: "",
-            username: ""
         };
     }
 
     componentDidMount() {
-        API.getByType('supervisors', this.props.match.params.id)
-        .then(res => {
-            console.log(res.data);
-          if (res.data.user) {
-            const { name, organization, project, area, username } = res.data.dbModel;
-            this.setState({
-              name, organization, project, area, username
+        this.loadExamples();
+        let maestro;
+      
+    }
+
+    loadExamples = () => {
+        
+        API.getStudents()
+            .then(res => {
+                this.setState({ students: res.data, id: "", project: "", checkin: "" });
+            })
+
+            .catch(err => {
+                console.log(err);
             });
-          }
-          else {
-            this.props.history.push("/");
-          }
-        })
-      }
+            
+        API.getSupervisor(this.props.match.params.id)
+            .then(res => {
+                this.setState({ supervisor: res.data, id: "", project: ""});
     
-      logout = () => {
-        API.logoutUser()
-        .then(res => {
-          this.props.history.push("/");
+            })
+
+            .catch(err => {
+                console.log(err);
+            });
+
+        
+    };
+    getStudent = () => {
+        const supervisor = this.state.supervisor;
+        const student = this.state.students;
+        console.log(supervisor,student);
+        const listElements = student.map((element) => {
+            if (supervisor && supervisor.dbModel.project==element.project)
+            return (
+                <li key={element._id}>
+                    <Link to={`/api/student/${element._id}`}>
+                        <p>
+                            {element.name} + <button> in </button>
+                        </p>
+                    </Link>
+                </li>
+            );
         });
-      }
+
+        if (listElements.length === 0)
+            return <h3>No Results </h3>;
+
+        return listElements;
+
+    }
+
 
 
     render() {
-        const examplesList = this.getExamplesAsList();
+        const student = this.getStudent();
+
         return (
             <div className="container">
                 <h1>Hello Teacher</h1>
                 <h2><Clock /></h2>
-                <div className="jumbotron">
-                    {examplesList}
-                    <LoadingButton />
-                </div>
                 <Card>
                     <Card.Header>Quick Information</Card.Header>
                     <Card.Body>
                         <blockquote className="blockquote mb-0">
                             <ul className="list-group list-group-flush"> Students Waiting For Approval
-                <li className="list-group-item"></li>
+                <li className="list-group-item">{student}</li>
                                 <li className="list-group-item"></li>
                                 <li className="list-group-item"></li>
                             </ul>
