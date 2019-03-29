@@ -4,8 +4,8 @@ import API from "../../utils/API";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Events from "./Events";
-import Clock from "../../components/Clock";
-import LoadingButton from "../../components/LoadingButton";
+
+
 
 class Home extends Component {
   constructor(props) {
@@ -24,32 +24,26 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    API.getAny().then(res => {
-      if (res.data.type !== "student") {
-        this.props.history.push("/");
-      } else {
-        API.getByUserID(res.data.type, res.data._id).then(res => {
-          console.log(res);
-          const {
-            name,
-            university,
-            project,
-            username,
-            hours,
-            checkin,
-            checkout
-          } = res.data;
-          this.setState({
-            name,
-            university,
-            project,
-            username,
-            hours,
-            checkin,
-            checkout
-          });
+    API.getAny()
+      .then(res => {
+        if (res.data.type !== 'student') {
+          this.props.history.push('/');
+        }
+        else {
+          API.getStudent(this.props.match.params.id)
+    .then(res => {
+        const { name, university, project, username, hours, checkin, checkout } = res.data.dbModel;
+        this.setState({
+          name,
+          university,
+          project,
+          username,
+          hours,
+          checkin,
+          checkout
         });
-      }
+    })
+        }
     });
   }
 
@@ -72,13 +66,11 @@ class Home extends Component {
     const id = this.props.match.params.id;
     return (
       <div className="container">
-        <div className="d-flex justify-content-between align-items-center py-5">
-          <h1>Hello, {name}</h1>
+        <h1>Hello {name}</h1>
+        <h2>
           <Clock />
-        </div>
-        <h2 id="event">
-          <Events />
         </h2>
+       <h2 id="event"><Events/></h2>
         <div className="jumbotron">
           <LoadingButton id={id} />
         </div>
@@ -97,6 +89,88 @@ class Home extends Component {
         <button className="btn btn-info" type="button" onClick={this.logout}>
           Log out
         </button>
+      </div>
+    );
+  }
+}
+
+function simulateNetworkRequest() {
+  return new Promise(resolve => setTimeout(resolve, 2000));
+}
+
+class LoadingButton extends React.Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.handleClick = this.handleClick.bind(this);
+
+    this.state = {
+      isLoading: false,
+      loggedIn: false
+    };
+  }
+
+
+  handleClick = () => {
+
+    this.setState({ isLoading: true }, () => {
+      simulateNetworkRequest().then(() => {
+        this.setState({ isLoading: false, status: !this.state.status });
+      });
+    });
+    if (this.state.check) {
+      API.saveCheckOut(this.props.id, { checkOut: new Date() }).then(res => {});
+      this.setState({ check: false });
+    } else {
+      API.saveCheckIn(this.props.id, { checkIn: new Date() }).then(res => {});
+      this.setState({ check: true });
+    }
+  };
+
+  getButtonTextByStatus = () => {
+    const { status } = this.state;
+    return status ? "Check Out" : "Check In";
+  };
+
+  render() {
+    const { isLoading } = this.state;
+
+    return (
+      <Button
+        variant="primary"
+        disabled={isLoading}
+        onClick={!isLoading ? this.handleClick : null}
+      >
+        {isLoading ? "Loading…" : this.getButtonTextByStatus()}
+      </Button>
+    );
+  }
+}
+
+class Clock extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { date: new Date() };
+  }
+
+  componentDidMount() {
+    this.timerID = setInterval(() => this.tick(), 1000);
+  }
+
+  componentWillUnmount() {
+    clearInterval(this.timerID);
+  }
+
+  tick() {
+    this.setState({
+      date: new Date()
+    });
+  }
+
+  render() {
+    return (
+      <div>
+        <h2>It is {this.state.date.toLocaleTimeString()}.</h2>
       </div>
     );
   }

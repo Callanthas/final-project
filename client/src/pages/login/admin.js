@@ -31,10 +31,14 @@ class AdminLogin extends Component {
             password
         })
         .then(res => {
-          const admin = res.data;
-          if (admin) {
-            this.props.history.push('/admin');
+          console.log(res);
+          if (res.data) {
+            API.getByUsername(type + "s", username)
+            .then(res => {
+              this.props.history.push(`/admin/${res.data._id}`)
+            });
           }
+          console.log("not found");
         })
 
     }

@@ -11,11 +11,11 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findByUserID: function (req, res, collection) {
+  findByUsername: function (req, res, collection) {
     console.log(req.params);
     db[collection]
       .findOne({
-        userID: req.params.userID
+        username: req.params.username
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
@@ -60,7 +60,7 @@ module.exports = {
         username
       })
       .then(user => {
-        console.log("user:", user); 
+        console.log("user:", user);
         if (!user) {
           console.log("no user found");
           return res.json(false);
@@ -68,14 +68,14 @@ module.exports = {
         bcrypt
           .compare(password, user.password)
           .then(doMatch => {
-            console.log("domatch:", doMatch);
+            console.log(doMatch);
             if (doMatch) {
               console.log("matching");
               req.session.isLoggedIn = true;
               req.session.user = user;
               return req.session.save(err => {
                 console.log(err);
-                res.json(user);
+                res.json(true);
               });
             }
             return res.json(false);
