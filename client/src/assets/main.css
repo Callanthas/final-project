@@ -1,6 +1,6 @@
 body{
-    background-color: #ACDAB7;
-    color: #1D4367;
+    background-color: #193F39;
+    color: #193F39;
 }
 
 .txt-normal {
@@ -9,16 +9,16 @@ body{
     }
 
 .navbar {
-    background-color: #92C04A; 
+    background-color: #1BBCA6; 
 }
 
 .btn {
     border-radius: 100px;
-    color: #92C04A;
+    color:#1BBCA6;
 }
 
 h1 {
-    color:#1D4367;
+    color: white;
     padding: 30px;
 }
 
@@ -29,7 +29,7 @@ h1 {
 }
 
 .card-body {
-    background-color: #9ED88B;
+    background-color: #1BBCA6;
         margin: auto;
         width: 100%;
         border: 3px;
