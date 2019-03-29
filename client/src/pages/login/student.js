@@ -31,14 +31,13 @@ class StudentLogin extends Component {
             password
         })
         .then(res => {
-          console.log(res);
-          if (res.data) {
-            API.getByUsername(type + "s", username)
-            .then(res => {
-              this.props.history.push(`/student/${res.data._id}`)
+          const student = res.data;
+          if (student) {
+            API.getByUserID(type, student._id)
+            .then(resp => {
+              this.props.history.push(`/student/${student._id}`)
             });
           }
-          console.log("not found");
         })
 
     }
