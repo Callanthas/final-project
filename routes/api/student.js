@@ -24,9 +24,9 @@ router
   });
 
   router
-  .route("/user/:userID")
+  .route("/username/:username")
   .get((req, res) => {
-    controller.findByUserID(req, res, collection);
+    controller.findByUsername(req, res, collection);
   })
 
 module.exports = router;

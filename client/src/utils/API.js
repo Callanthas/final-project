@@ -15,12 +15,13 @@ export default {
     return axios.get(`/api/supervisors/${id}` );
   },
 
+
   getByType: function(type, id) {
     return axios.get(`/api/${type}/${id}`);
   },
 
-  getByUserID: function(type, userID) {
-    return axios.get(`/api/${type}s/user/${userID}`);
+  getByUsername: function(type, username) {
+    return axios.get(`/api/${type}/username/${username}`);
   },
 
   signupUser: function(userData) {

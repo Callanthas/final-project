@@ -1,32 +1,12 @@
 import React, { Component } from "react";
-import API from "../../utils/API";
-import LoginNav from "../../components/LoginNav";
+import API from "../utils/API";
+import LoginNav from "../components/LoginNav";
 
 class Login extends Component {
   constructor(props) {
     super(props);
 
     this.state = {};
-  }
-
-  componentDidMount () {
-    API.getAny()
-    .then(res => {
-      const { type, _id } = res.data;
-      switch (type) {
-        case 'student':
-        case 'supervisor':
-        this.props.history.push(`/${type}/${_id}`)
-          break;
-
-          case 'admin':
-          this.props.history.push('/admin');
-          break;
-      
-        default:
-          break;
-      }
-    })
   }
 
   render() {

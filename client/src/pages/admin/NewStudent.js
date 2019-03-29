@@ -17,7 +17,7 @@ class NewStudent extends Component {
   componentDidMount () {
     API.getAny()
     .then(res => {
-      if (res.data.type  !== 'admin') {
+      if (res.data.type !== 'admin') {
         this.props.history.push('/');
       }
     }); 
@@ -39,7 +39,7 @@ class NewStudent extends Component {
     const project = this.state.project.trim();
     const studentID = this.state.id.trim();
     const password = this.state.password.trim();
-    
+    console.log(name, university, project, studentID, password);
     API.signupUser({
       username: studentID,
       password,
@@ -53,8 +53,6 @@ class NewStudent extends Component {
           username: studentID,
           userID: res.data._id
         });
-
-        this.props.history.push('/admin');
       }
     });
   };
@@ -91,7 +89,7 @@ class NewStudent extends Component {
         </div>
         <div className="form-group">
           <label htmlFor="description">University:</label>
-          <input
+          <textarea
             className="form-control"
             name="university"
             placeholder="university"

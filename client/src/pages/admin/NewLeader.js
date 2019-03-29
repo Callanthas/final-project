@@ -35,6 +35,7 @@ class NewLeader extends Component {
 
   submitSupervisor = event => {
     event.preventDefault();
+    console.log("submitting");
     const name = this.state.name.trim();
     const organization = this.state.organization.trim();
     const project = this.state.project.trim();
@@ -54,10 +55,8 @@ class NewLeader extends Component {
           project,
           area,
           username,
-          userID: res.data._id
+          password
         });
-
-        this.props.history.push('/admin');
       }
     });
   };
