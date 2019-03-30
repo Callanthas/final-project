@@ -42,7 +42,6 @@ app.use((req, res, next) => {
     .then(user => {
       if (user) {
         req.user = user;
-        res.user = user;
         return next();
       }
     })
@@ -50,7 +49,6 @@ app.use((req, res, next) => {
 });
 
 app.get("/api", function(req, res) {
-  console.log(req.session.user);
   res.json(req.session.user);
 })
 

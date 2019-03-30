@@ -1,14 +1,14 @@
 const mongoose = require("mongoose");
 const faker = require('faker');
 const db = require("../models");
-
+const bcrypt = require("bcryptjs");
 // This file empties the Example collection and inserts some test documents below
 mongoose.connect(
   process.env.MONGODB_URI || 
   "mongodb://localhost/finalclassproject"
 );
 
-const SEED_AMOUNT = 50;
+const SEED_AMOUNT = 1;
 let exampleSeed = [];
 
 for(let i = 0; i < SEED_AMOUNT; i++) {
@@ -19,14 +19,32 @@ for(let i = 0; i < SEED_AMOUNT; i++) {
   });
 }
 
-db.Example
-  .remove({})
-  .then(() => db.Example.collection.insertMany(exampleSeed))
-  .then(data => {
-    console.log(data.result.n + " records inserted!");
-    process.exit(0);
-  })
-  .catch(err => {
-    console.error(err);
-    process.exit(1);
-  });
+(function () {
+    const username = "admin";
+    password = "admin";
+    type = "admin";
+
+    db['User']
+      .findOne({
+        username: username
+      })
+      .then(userDoc => {
+        return bcrypt
+          .hash(password, 12)
+          .then(hashedPassword => {
+            const user = new db['User']({
+              username,
+              password: hashedPassword,
+              type
+            });
+            return user.save();
+          })
+          .then(result => {
+            process.exit(0);
+          });
+      })
+      .catch(err => {
+        console.log(err);
+      });
+    })()
+

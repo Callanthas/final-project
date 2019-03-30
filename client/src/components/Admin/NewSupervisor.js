@@ -7,26 +7,31 @@ class NewLeader extends Component {
 
     this.state = {
       name: "",
-      organization: "",
       project: "",
-      area: "",
       username: "",
-      password: ""
+      password: "",
+      projects: []
     };
   }
 
-  componentDidMount () {
-    API.getAny()
-    .then(res => {
-      if (res.data.type !== 'admin') {
-        this.props.history.push('/');
+  componentDidMount() {
+    API.getAny().then(res => {
+      if (res.data.type !== "admin") {
+        this.props.history.push("/");
       }
-    }); 
-   }
+    });
+
+    API.getAll("project").then(res => {
+      const projects = [...res.data];
+      this.setState({
+        projects,
+        project: projects[0]._id
+      });
+    });
+  }
 
   handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
 
     this.setState({
       [name]: value
@@ -35,11 +40,8 @@ class NewLeader extends Component {
 
   submitSupervisor = event => {
     event.preventDefault();
-    console.log("submitting");
     const name = this.state.name.trim();
-    const organization = this.state.organization.trim();
     const project = this.state.project.trim();
-    const area = this.state.area.trim();
     const username = this.state.username.trim();
     const password = this.state.password.trim();
 
@@ -49,40 +51,31 @@ class NewLeader extends Component {
       type: "supervisor"
     }).then(res => {
       if (res) {
-        API.saveNewSupervisor({
+        API.saveNew("supervisors", {
           name,
-          organization,
           project,
-          area,
           username,
-          password
+          userID: res.data._id
+        }).then(() => {
+          this.setState({
+            name: "",
+            project: "",
+            username: ""
+          });
         });
       }
     });
   };
 
-  /* areInputsValid = (title, description) => {
-    if(!title) {
-      alert("Please fill out the title");
-      return false;
-    }
-
-    if(!description) {
-      alert("Please fill out the description");
-      return false;
-    }
-
-    return true;
-  } */
-
   render() {
-    const { name, organization, project, area, username, password } = this.state;
+    const {
+      name,
+      projects,
+      username,
+      password
+    } = this.state;
 
     return (
-
-
-
-
       <form className="container" onSubmit={this.submitSupervisor}>
         <h1>Add a New Supervisor</h1>
         <div className="form-group">
@@ -96,39 +89,15 @@ class NewLeader extends Component {
             value={name}
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="organization">Organization:</label>
-          <input
-            className="form-control"
-            name="organization"
-            placeholder="organization"
-            onChange={this.handleInputChange}
-            value={organization}
-          />
-        </div>
 
         <div className="form-group">
-          <label htmlFor="project">Assigned Project:</label>
-          <input
-            className="form-control"
-            name="project"
-            type="text"
-            placeholder="project"
-            onChange={this.handleInputChange}
-            value={project}
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="area">Assigned Area:</label>
-          <input
-            className="form-control"
-            name="area"
-            type="text"
-            placeholder="area"
-            onChange={this.handleInputChange}
-            value={area}
-          />
+          <label htmlFor="project">Project:</label>
+          <select onChange={this.handleInputChange} name="project" className="form-control" id="project">
+            {projects.map(project => {
+              console.log(project);
+              return <option value={project._id} key={project._id}>{project.name}</option>;
+            })}
+          </select>
         </div>
 
         <div className="form-group">
