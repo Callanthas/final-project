@@ -9,8 +9,8 @@
     "start:dev": "concurrently \"nodemon --ignore 'client/*'\" \"npm run client\"",
     "client": "cd client && npm run start",
     "install": "cd client && npm install",
-    "build": "cd client && npm run build && npm run seed",
-    "heroku-postbuild": "npm run build",
+    "build": " npm run seed && cd client && npm run build",
+    "heroku-postbuild": "npm run seed & npm run build",
     "seed": "node scripts/seedDB.js"
   },
   "author": "",
