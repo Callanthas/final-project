@@ -114,12 +114,16 @@ class Supervisor extends Component {
         <Card>
           <Card.Header>Quick Information</Card.Header>
           <Card.Body>
-              <ul className="list-group list-group-flush">
-                {students.map(student => {
-                  console.log(student);
-                  return <li key={student._id} id={student._id}>{student.student} - {projectName} - {student.date} </li>;
-                })}
-              </ul>
+            <ul className="list-group list-group-flush">
+              {students.map(student => {
+                console.log(student);
+                return (
+                  <li key={student._id} id={student._id}>
+                    {student.student} - {projectName} - {student.date}{" "}
+                  </li>
+                );
+              })}
+            </ul>
           </Card.Body>
         </Card>
         <button className="btn btn-info" type="button" onClick={this.logout}>
