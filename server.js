@@ -8,9 +8,10 @@ const db = require("./models");
 
 const PORT = process.env.PORT || 3000;
 const app = express();
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/finalclassproject";
 
 const store = new MongoDBStore({
-  uri: 'mongodb://localhost/finalclassproject',
+  uri: MONGODB_URI,
   collection: 'sessions'
 });
 
@@ -54,7 +55,7 @@ app.get("/api", function(req, res) {
 
 app.use(routes);
 
-mongoose.connect('mongodb://localhost/finalclassproject', {
+mongoose.connect(MONGODB_URI, {
   useNewUrlParser: true
 });
 
