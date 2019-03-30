@@ -1,40 +1,46 @@
-body{
-    background-color: #193F39;
-    color: #193F39;
+body {
+  background-color: #193f39;
+  color: #193f39;
+}
+
+#foto {
+  background-image: url("https://cdn-images-1.medium.com/max/1600/1*VuR7F4eThl29Lg1z3dBZzg.jpeg");
+  background-size: 100%;
+}
+
+#logindiv {
+  text-align: center;
 }
 
 .txt-normal {
-    font-family: 'Arial', sans-serif;
-    
-    }
+  font-family: "Arial", sans-serif;
+}
 
 .navbar {
-    background-color: #1BBCA6; 
+  background-color: #1bbca6;
+  color: white;
 }
 
 .btn {
-    border-radius: 100px;
-    color:#1BBCA6;
+  border-radius: 100px;
+  color: #1bbca6;
 }
 
 h1 {
-    color: white;
-    padding: 30px;
+  color: white;
+  padding: 30px;
 }
 
 .containter {
-    margin: auto;
-    width: 100%;
-    padding: 30px;
+  margin: auto;
+  width: 100%;
+  padding: 30px;
 }
 
 .card-body {
-    background-color: #1BBCA6;
-        margin: auto;
-        width: 100%;
-        border: 3px;
-        padding: 30px;
-}
-#event{
-    -ms-text-align-last: right; 
+  background-color: #1bbca6;
+  margin: auto;
+  width: 100%;
+  border: 3px;
+  padding: 30px;
 }

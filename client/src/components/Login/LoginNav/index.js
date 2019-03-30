@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-
 import ADMIN from "../../../assets/icons/ADMIN.png";
 import STUDENT from "../../../assets/icons/STUDENT.png";
 import LEAD from "../../../assets/icons/LEAD.png";
-import { LOGO } from "../../../assets/icons/LOGO-01.png";
+//import { LOGO } from "../../../assets/icons/LOGO-01.png";
 
 class LoginNav extends Component {
   constructor(props, context) {
@@ -37,8 +36,9 @@ class LoginNav extends Component {
               />
 
               <p className="themed-grid-col">
-                Click to login as Administrator. An Administrator can add new
-                students, leads and projects.
+                Login as Administrator if you are in charge of adding new
+                projects, new leaders and new students to UCSR and help them
+                optimize their activity.
               </p>
 
               <Link className="themed-grid-col" to="/login/admin">
@@ -60,8 +60,9 @@ class LoginNav extends Component {
                 height="140"
               />
               <p className="themed-grid-col">
-                As a student you can see your project, leader, check-in and
-                check-out from your community service project.
+                Login as a student if you have an assigned community service
+                project, to check-in and check-out from it and keep track of
+                your accoumulated hours.
               </p>
               <Link className="themed-grid-col" to="/login/student">
                 Student
@@ -83,7 +84,9 @@ class LoginNav extends Component {
               />
 
               <p className="themed-grid-col">
-                Check in as a leader and/or teacher.
+                Login as a leader if you are in charge of a community service
+                project from an organization and be able to see which students
+                are checking-in to your project.{" "}
               </p>
               <Link className="themed-grid-col" to="/login/supervisor">
                 Leader
