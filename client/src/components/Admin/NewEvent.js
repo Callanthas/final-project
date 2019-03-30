@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import API from "../../utils/API";
-import axios from "axios";
 
 class NewEvent extends Component {
   constructor(props) {
@@ -13,61 +12,46 @@ class NewEvent extends Component {
     };
   }
 
-  componentDidMount () {
-   API.getAny()
-   .then(res => {
-     if (res.data.type !== 'admin') {
-       this.props.history.push('/');
-     }
-   }); 
+  componentDidMount() {
+    API.getAny().then(res => {
+      if (res.data.type !== "admin") {
+        this.props.history.push("/");
+      }
+    });
   }
 
   handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
 
     this.setState({
       [name]: value
     });
   };
 
-  submitExample = event => {
+  submitEvent = event => {
     event.preventDefault();
-    debugger;
     const name = this.state.name.trim();
     const date = this.state.date.trim();
     const hours = this.state.hours.trim();
 
-    API.saveNewEvent({
+    API.saveNew("events", {
       name,
       date,
       hours
     }).then(() => {
-      this.props.history.push("/");
+      this.setState({
+        name: "",
+        date: "",
+        hours: ""
+      });
     });
   };
 
-  /* areInputsValid = (title, description) => {
-    if(!title) {
-      alert("Please fill out the title");
-      return false;
-    }
-
-    if(!description) {
-      alert("Please fill out the description");
-      return false;
-    }
-
-    return true;
-  } */
-
   render() {
-    const name = this.state.name;
-    const date = this.state.date;
-    const hours = this.state.hours;
+    const { name, date, hours } = this.state;
 
     return (
-      <form className="container" onSubmit={this.submitExample}>
+      <form className="container" onSubmit={this.submitEvent}>
         <h1>Add a New Event</h1>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
@@ -81,8 +65,8 @@ class NewEvent extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="description">Date:</label>
-          <textarea
+          <label htmlFor="date">Date:</label>
+          <input
             className="form-control"
             name="date"
             placeholder="date"
@@ -91,7 +75,7 @@ class NewEvent extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="hours">Hours Validated :</label>
+          <label htmlFor="hours">Hours Validated:</label>
           <input
             className="form-control"
             name="hours"
@@ -103,7 +87,7 @@ class NewEvent extends Component {
         </div>
 
         <button className="btn btn-info" type="submit">
-                  Submit
+          Submit
         </button>
       </form>
     );

@@ -9,23 +9,30 @@ class NewStudent extends Component {
       name: "",
       university: "",
       project: "",
-      id: "",
-      password: ""
+      username: "",
+      password: "",
+      projects: []
     };
   }
 
-  componentDidMount () {
-    API.getAny()
-    .then(res => {
-      if (res.data.type !== 'admin') {
-        this.props.history.push('/');
+  componentDidMount() {
+    API.getAny().then(res => {
+      if (res.data.type !== "admin") {
+        this.props.history.push("/");
       }
-    }); 
-   }
+    });
+
+    API.getAll("project").then(res => {
+      const projects = [...res.data];
+      this.setState({
+        projects,
+        project: projects[0]._id
+      });
+    });
+  }
 
   handleInputChange = event => {
-    const name = event.target.name;
-    const value = event.target.value;
+    const { name, value } = event.target;
 
     this.setState({
       [name]: value
@@ -36,43 +43,38 @@ class NewStudent extends Component {
     event.preventDefault();
     const name = this.state.name.trim();
     const university = this.state.university.trim();
-    const project = this.state.project.trim();
-    const studentID = this.state.id.trim();
+    const project = this.state.project;
+    const username = this.state.username.trim();
     const password = this.state.password.trim();
-    console.log(name, university, project, studentID, password);
+
     API.signupUser({
-      username: studentID,
+      username,
       password,
       type: "student"
     }).then(res => {
       if (res) {
-        API.saveNewStudent({
-          name,
-          university,
+        API.saveNew("students", {
+          student: {
+            name,
+            university,
+            username
+          },
           project,
-          username: studentID,
           userID: res.data._id
+        }).then(() => {
+          this.setState({
+            name: "",
+            university: "",
+            username: "",
+            password: ""
+          });
         });
       }
     });
   };
 
-  /* areInputsValid = (title, description) => {
-    if(!title) {
-      alert("Please fill out the title");
-      return false;
-    }
-
-    if(!description) {
-      alert("Please fill out the description");
-      return false;
-    }
-
-    return true;
-  } */
-
   render() {
-    const { name, university, project, id, password } = this.state;
+    const { name, university, projects, username, password } = this.state;
     return (
       <form className="container" onSubmit={this.submitStudent}>
         <h1>Add a New Social Service Student</h1>
@@ -88,8 +90,8 @@ class NewStudent extends Component {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="description">University:</label>
-          <textarea
+          <label htmlFor="university">University:</label>
+          <input
             className="form-control"
             name="university"
             placeholder="university"
@@ -99,31 +101,29 @@ class NewStudent extends Component {
         </div>
 
         <div className="form-group">
-          <label htmlFor="project">Assigned Project:</label>
-          <input
-            className="form-control"
-            name="project"
-            type="text"
-            placeholder="project"
-            onChange={this.handleInputChange}
-            value={project}
-          />
+          <label htmlFor="project">Project:</label>
+          <select onChange={this.handleInputChange} name="project" className="form-control" id="project">
+            {projects.map(project => {
+              console.log(project);
+              return <option value={project._id} key={project._id}>{project.name}</option>;
+            })}
+          </select>
         </div>
 
         <div className="form-group">
-          <label htmlFor="id">Assigned ID:</label>
+          <label htmlFor="username">Assigned ID:</label>
           <input
             className="form-control"
-            name="id"
+            name="username"
             type="text"
             placeholder="id"
             onChange={this.handleInputChange}
-            value={id}
+            value={username}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="id">Password:</label>
+          <label htmlFor="password">Password:</label>
           <input
             className="form-control"
             name="password"

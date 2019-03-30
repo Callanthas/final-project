@@ -1,7 +1,5 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-/* import Dropdown from 'react-bootstrap/Dropdown';
-import FormControl from 'react-bootstrap/FormControl'; */
 
 class Nav extends Component {
   constructor(props, context) {
@@ -26,26 +24,26 @@ class Nav extends Component {
         </h1>
         <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
           <li className="nav-item active">
-            <Link className="nav-link" to="/newstudent">
+            <Link className="nav-link" to="/admin/student">
               Add Student
             </Link>
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link" to="/newevent">
+            <Link className="nav-link" to="/admin/event">
               Add Event
             </Link>
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link" to="/newproject">
+            <Link className="nav-link" to="/admin/project">
               Add Project
             </Link>
           </li>
 
           <li className="nav-item active">
-            <Link className="nav-link" to="/newleader">
-              Add Leader
+            <Link className="nav-link" to="/admin/supervisor">
+              Add Supervisor
             </Link>
           </li>
         </ul>

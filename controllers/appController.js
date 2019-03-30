@@ -2,7 +2,7 @@ const db = require("../models");
 const bcrypt = require("bcryptjs");
 
 module.exports = {
-  findAll: function (req, res, collection) {
+  findAll: function(req, res, collection) {
     db[collection]
       .find(req.query)
       .sort({
@@ -11,37 +11,51 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findByUsername: function (req, res, collection) {
+  findByProject: function(req, res, collection) {
+    db[collection]
+      .find({ project: req.params.project })
+      .then(dbModel => res.json(dbModel))
+      .catch(err => res.status(422).json(err));
+  },
+
+  findByUserID: function(req, res, collection) {
     console.log(req.params);
     db[collection]
       .findOne({
-        username: req.params.username
+        userID: req.params.userID
       })
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  findById: function (req, res, collection) {
-    const user = req.user; 
+  findById: function(req, res, collection) {
+    const user = req.user;
     db[collection]
       .findById(req.params.id)
-      .then(dbModel => res.json({dbModel, user}))
+      .then(dbModel => res.json({ dbModel, user }))
       .catch(err => res.status(422).json(err));
   },
-  create: function (req, res, collection) {
+  create: function(req, res, collection) {
+    console.log(collection, req.body);
     db[collection]
       .create(req.body)
       .then(dbModel => res.json(dbModel))
-      .catch(err => res.status(422).json(err));
+      .catch(err => {
+        console.log(err);
+        res.status(422).json(err);
+      });
   },
-  update: function (req, res, collection) {
+  update: function(req, res, collection) {
     db[collection]
-      .findOneAndUpdate({
-        _id: req.params.id
-      }, req.body)
+      .findOneAndUpdate(
+        {
+          _id: req.params.id
+        },
+        req.body
+      )
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  remove: function (req, res, collection) {
+  remove: function(req, res, collection) {
     db[collection]
       .findById({
         _id: req.params.id
@@ -50,14 +64,14 @@ module.exports = {
       .then(dbModel => res.json(dbModel))
       .catch(err => res.status(422).json(err));
   },
-  checkLogin: function (req, res, collection) {
-    const {
-      username,
-      password
-    } = req.body;
+  checkLogin: function(req, res, collection) {
+    const { username, password, type } = req.body;
+    console.log("chekcing login");
 
-    db[collection].findOne({
-        username
+    db[collection]
+      .findOne({
+        username,
+        type
       })
       .then(user => {
         console.log("user:", user);
@@ -68,14 +82,14 @@ module.exports = {
         bcrypt
           .compare(password, user.password)
           .then(doMatch => {
-            console.log(doMatch);
+            console.log("domatch:", doMatch);
             if (doMatch) {
               console.log("matching");
               req.session.isLoggedIn = true;
               req.session.user = user;
               return req.session.save(err => {
                 console.log(err);
-                res.json(true);
+                res.json(user);
               });
             }
             return res.json(false);
@@ -84,18 +98,14 @@ module.exports = {
             console.log(err);
             res.send("Oops, something went wrong");
           });
-
       })
       .catch(err => console.log(err));
   },
-  checkSignup: function (req, res, collection) {
-    const {
-      username,
-      password,
-      type
-    } = req.body;
+  checkSignup: function(req, res, collection) {
+    const { username, password, type } = req.body;
 
-    db[collection].findOne({
+    db[collection]
+      .findOne({
         username: username
       })
       .then(userDoc => {
@@ -121,7 +131,7 @@ module.exports = {
       });
   },
 
-  logout: function (req, res) {
+  logout: function(req, res) {
     req.session.destroy();
     res.json(true);
   }

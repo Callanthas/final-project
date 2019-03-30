@@ -1,27 +1,25 @@
 import axios from "axios";
 
 export default {
-  getStudents: function() {
-    return axios.get("/api/students");
+  getAll: function(type) {
+    console.log(`api/${type}s/`);
+    return axios.get(`/api/${type}s/`);
   },
   // Gets the example with the given id
-  getStudent: function(id) {
-    return axios.get(`/api/students/${id}`);
-  },
-  getProject: function(id) {
-    return axios.get(`/api/projects/${id}`);
-  },
-  getSupervisor: function(id) {
-    return axios.get(`/api/supervisors/${id}` );
+  getOne: function(type, id) {
+    return axios.get(`/api/${type}s/${id}`);
   },
 
-
-  getByType: function(type, id) {
-    return axios.get(`/api/${type}/${id}`);
+  getByUserID: function(type, userID) {
+    return axios.get(`/api/${type}s/user/${userID}`);
   },
 
-  getByUsername: function(type, username) {
-    return axios.get(`/api/${type}/username/${username}`);
+  getByProject: function(type, project) {
+    return axios.get(`/api/${type}s/project/${project}`);
+  },
+
+  getById: function(type, id) {
+    return axios.get(`/api/${type}s/${id}`)
   },
 
   signupUser: function(userData) {
@@ -36,24 +34,11 @@ export default {
     return axios.post("/api/users/logout");
   },
 
-  // ADMIN VIEW SAVES NEW STUDENT, PROJECT, EVENT AND SUPERVISOR(LEADER)
-  saveNewStudent: function(studentData) {
-    return axios.post("/api/students", studentData);
+  saveNew: function(type, data) {
+    console.log(data);
+    return axios.post(`/api/${type}/`, data);
   },
 
-  saveNewProject: function(projectData) {
-    return axios.post("/api/projects", projectData);
-  },
-
-  saveNewEvent: function(eventData) {
-    return axios.post("/api/events", eventData);
-  },
-
-  saveNewSupervisor: function(supervisorData) {
-    return axios.post("/api/supervisors", supervisorData);
-  },
-
-  
   getAny: function() {
     return axios.get("/api");
 },
@@ -64,5 +49,9 @@ export default {
 
   saveCheckOut: function(id, checkOut) {
     return axios.put(`/api/students/${id}`, checkOut);
+  },
+
+  checkIn: function(data) {
+    return axios.post(`/api/checkins/`, data);
   }
 };
